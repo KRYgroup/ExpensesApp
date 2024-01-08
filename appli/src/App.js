@@ -2,6 +2,8 @@ import "./App.css";
 import ExpenseChart from "./components/ExpenseChart";
 import IncomeChart from "./components/IncomeChart";
 import CurrencyExchangeRate from "./components/CurrencyExchangeRate";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   //ただの例（後で消す）
@@ -21,14 +23,13 @@ function App() {
   return (
     <div className="App">
       {/* 下の仮<header>の代わりに<Header></Header>を入れる */}
-      <header className="App-header">
-        <h1>ExpensesApp</h1>
-      </header>
+      <Header /> {/* Headerコンポーネントを追加 */}
       <div className="content">
         <ExpenseChart expenses={sampleExpenses} />
         <IncomeChart incomes={sampleIncomes} />
         <CurrencyExchangeRate baseCurrency="AUD" targetCurrency="JPY" amount={amountToConvert} />
       </div>
+      <Footer /> {/* Footerコンポーネントを追加 */}
     </div>
   );
 }
