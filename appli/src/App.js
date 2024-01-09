@@ -7,15 +7,10 @@ import BudgetForm from "./components/BudgetForm"; // Make sure to import BudgetF
 import BudgetOverview from "./components/BudgetOverview"; // Make sure to import BudgetOverview
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import TransactionForm from "./components/TransactionForm";
-import TransactionList from "./components/TransactionList";
 import Signup from "./components/Signup";
-import React, { useState } from 'react';
 import Dashboard from "./components/Dashboard";
 
 function App() {
-  const [transactions, setTransactions] = useState([]); // 取引の状態
-
   return (
     <Router>
       <div className="App">
@@ -29,8 +24,6 @@ function App() {
               path="/"
               element={
                 <>
-                  <TransactionForm addTransaction={newTransaction => setTransactions([...transactions, newTransaction])} />
-                  <TransactionList transactions={transactions} />
                   <BudgetForm />
                   <BudgetOverview />
                   <Dashboard />
