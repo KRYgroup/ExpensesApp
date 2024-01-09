@@ -12,11 +12,12 @@ import TransactionList from "./components/TransactionList";
 import Signup from "./components/Signup";
 import React, { useState } from 'react';
 import Dashboard from "./components/Dashboard";
+import Loading from "./components/Loading";
 
 function App() {
   const [transactions, setTransactions] = useState([]); 
   const [budget, setBudget] = useState(0);
-
+  const [isLoading, /*setIsLoading*/] = useState(false);
   const handleBudgetSubmit = (newBudget) => {
     setBudget(newBudget);
   };
@@ -24,6 +25,7 @@ function App() {
   return (
     <Router>
       <div className="App">
+      {isLoading && <Loading />} {/* ローディングが true の場合にローディングコンポーネントを表示 */}
         <Header />
         <div className="content">
           <Routes>
