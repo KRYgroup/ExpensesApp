@@ -5,7 +5,13 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
-const IncomeChart = ({ incomes }) => {
+const IncomeChart = ({
+  incomes = [
+    { source: "Job", amount: 1500 },
+    { source: "Freelance", amount: 800 },
+    { source: "Other", amount: 200 },
+  ],
+}) => {
   const chartData = {
     labels: incomes.map((income) => income.source),
     datasets: [
