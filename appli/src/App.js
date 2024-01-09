@@ -11,9 +11,9 @@ import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
 import Signup from "./components/Signup";
 import React, { useState } from 'react';
+import Dashboard from "./components/Dashboard";
 
 function App() {
-
   const [transactions, setTransactions] = useState([]); // 取引の状態
 
   return (
@@ -23,6 +23,8 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/signup" element={<Signup />} />
+            <Route path="/dashboard" element={<Dashboard />} /> {/* ここにカレンダーのルートを追加 */}
+            {/* 他のルート */}
             <Route
               path="/"
               element={
@@ -31,6 +33,7 @@ function App() {
                   <TransactionList transactions={transactions} />
                   <BudgetForm />
                   <BudgetOverview />
+                  <Dashboard />
                   <ExpenseChart />
                   <IncomeChart />
                   <CurrencyExchangeRate />
