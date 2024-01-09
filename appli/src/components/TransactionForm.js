@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function TransactionForm() {
+function TransactionForm({ addTransaction }) {
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('');
   const [date, setDate] = useState('');
@@ -8,7 +8,18 @@ function TransactionForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // ここで入力値を処理します（例えば、状態をリフトアップして親コンポーネントに送信）
+    const newTransaction = {
+      date: date || new Date().toISOString().split('T')[0], // 日付が入力されていない場合、現在の日付を使用
+      category: category,
+      amount: parseFloat(amount),
+      type: type
+    };
+    addTransaction(newTransaction); // 新しい取引を追加する関数を呼び出す
+    // フォームのフィールドをクリアする
+    setAmount('');
+    setCategory('');
+    setDate('');
+    setType('expense');
   };
 
   return (
