@@ -14,7 +14,12 @@ import React, { useState } from 'react';
 import Dashboard from "./components/Dashboard";
 
 function App() {
-  const [transactions, setTransactions] = useState([]); // 取引の状態
+  const [transactions, setTransactions] = useState([]); 
+  const [budget, setBudget] = useState(0);
+
+  const handleBudgetSubmit = (newBudget) => {
+    setBudget(newBudget);
+  };
 
   return (
     <Router>
@@ -23,16 +28,15 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/signup" element={<Signup />} />
-            <Route path="/dashboard" element={<Dashboard />} /> {/* ここにカレンダーのルートを追加 */}
-            {/* 他のルート */}
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route
               path="/"
               element={
                 <>
                   <TransactionForm addTransaction={newTransaction => setTransactions([...transactions, newTransaction])} />
                   <TransactionList transactions={transactions} />
-                  <BudgetForm />
-                  <BudgetOverview />
+                  <BudgetForm onFormSubmit={handleBudgetSubmit} /> {/* handleBudgetSubmit 関数を渡す */}
+                  <BudgetOverview budget={budget} /> {/* budget 状態を渡す */}
                   <Dashboard />
                   <ExpenseChart />
                   <IncomeChart />
