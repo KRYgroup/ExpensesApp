@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import ExpenseChart from "./components/ExpenseChart";
@@ -14,7 +14,7 @@ import Loading from "./components/Loading";
 
 function App() {
   const [budget, setBudget] = useState(0);
-  const [isLoading, /*setIsLoading*/] = useState(false);
+  const [isLoading /*setIsLoading*/] = useState(false);
   const handleBudgetSubmit = (newBudget) => {
     setBudget(newBudget);
   };
@@ -22,7 +22,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-      {isLoading && <Loading />} {/* ローディングが true の場合にローディングコンポーネントを表示 */}
+        {isLoading && <Loading />} {/* ローディングが true の場合にローディングコンポーネントを表示 */}
         <Header />
         <div className="content">
           <Routes>
@@ -32,8 +32,6 @@ function App() {
               path="/"
               element={
                 <>
-                  <BudgetForm />
-                  <BudgetOverview />
                   <BudgetForm onFormSubmit={handleBudgetSubmit} /> {/* handleBudgetSubmit 関数を渡す */}
                   <BudgetOverview budget={budget} /> {/* budget 状態を渡す */}
                   <Dashboard />
