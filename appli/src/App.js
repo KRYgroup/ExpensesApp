@@ -10,8 +10,12 @@ import Footer from "./components/Footer";
 import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
 import Signup from "./components/Signup";
+import React, { useState } from 'react';
 
 function App() {
+
+  const [transactions, setTransactions] = useState([]); // 取引の状態
+
   return (
     <Router>
       <div className="App">
@@ -23,8 +27,8 @@ function App() {
               path="/"
               element={
                 <>
-                  <TransactionForm />
-                  <TransactionList />
+                  <TransactionForm addTransaction={newTransaction => setTransactions([...transactions, newTransaction])} />
+                  <TransactionList transactions={transactions} />
                   <BudgetForm />
                   <BudgetOverview />
                   <ExpenseChart />
