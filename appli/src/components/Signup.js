@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -10,11 +10,31 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3001/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+      if (response.status === 200) {
+        navigate("/login");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+    }
     //Deploy Signup functions here
     // Ex) Request for API, validation of user input
-
-    //After signup, redirect to the login page
-    navigate("/login");
   };
 
   return (
@@ -39,6 +59,9 @@ const Signup = () => {
         </div>
         <button type="submit">Signup</button>
       </form>
+      <p>
+        Already have an account? <Link to="/login">Log in here</Link> {/* Link to login page */}
+      </p>
     </div>
   );
 };
