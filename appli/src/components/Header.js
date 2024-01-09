@@ -28,7 +28,7 @@ const StyledLink = styled(Link)`
 const Header = () => {
   return (
     <HeaderContainer>
-      <h1>ExpencesApp</h1>
+      <h1>ExpensesApp</h1>
       <Nav>
         <StyledLink to="/">Dashboard</StyledLink>
         <StyledLink to="/about">Transaction Form</StyledLink>
