@@ -94,6 +94,11 @@ function Dashboard() {
     setTargetCurrency(newTargetCurrency);
   };
 
+  const handleDelete = (id) => {
+    setTransactions(currentTransactions => currentTransactions.filter(t => t.id !== id));
+  };
+  
+
   const calculateTotalsByDate = () => {
     const totals = transactions.reduce((acc, transaction) => {
       const { date, amount, type } = transaction;
