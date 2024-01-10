@@ -5,8 +5,34 @@ import interactionPlugin from '@fullcalendar/interaction';
 import TransactionForm from './TransactionForm';
 import TransactionList from './TransactionList';
 import styled from 'styled-components';
+import backgroundImage1 from '../images/wood2.png';
+import backgroundImage2 from '../images/wood3.png';
+import CurrencyExchangeRate from './CurrencyExchangeRate';
 
-// スタイル付きコンポーネントの定義
+const FullCalendarStyles = styled.div`
+  .fc-today-button {
+    background-image: url(${backgroundImage1});
+    border: none;
+    color: white;
+  }
+
+  .fc-prev-button,
+  .fc-next-button {
+    background-image: url(${backgroundImage1});
+    border: none;
+    color: white;
+    font-weight: bold;
+  }
+
+  /* ホバー状態のスタイル */
+  .fc-today-button:hover,
+  .fc-prev-button:hover,
+  .fc-next-button:hover {
+    background-image: url(${backgroundImage2});
+  }
+`;
+
+
 const Modal = styled.div`
   position: fixed;
   z-index: 1000;
@@ -43,6 +69,12 @@ function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [transactions, setTransactions] = useState([]);
+  const [baseCurrency, setBaseCurrency] = useState('AUD'); // 基本通貨
+  const [targetCurrency, setTargetCurrency] = useState('JPY'); // 目標通過
+
+  const deleteTransaction = (transactionId) => {
+    setTransactions(transactions.filter(transaction => transaction.id !== transactionId));
+  };  
 
   const addTransaction = (newTransaction) => {
     setTransactions([...transactions, newTransaction]);
@@ -56,6 +88,11 @@ function Dashboard() {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleCurrencyChange = (newBaseCurrency, newTargetCurrency) => {
+    setBaseCurrency(newBaseCurrency);
+    setTargetCurrency(newTargetCurrency);
   };
 
   const calculateTotalsByDate = () => {
@@ -74,6 +111,7 @@ function Dashboard() {
       title: '',
       date,
       allDay: true,
+      backgroundColor: 'transparent',
       extendedProps: totals[date]  // 支出と収入のデータを拡張プロパティに格納
     }));
   };
@@ -82,21 +120,45 @@ function Dashboard() {
     const { expense, income } = eventInfo.event.extendedProps;
     return (
       <div>
-        <div style={{ color: 'red' }}>Exp: ${expense}</div>
-        <div style={{ color: 'green' }}>Inc: ${income}</div>
+        {expense > 0 && <div style={{ color: '#FF5F17' }}>Exp: ${expense}</div>}
+        {income > 0 && <div style={{ color: 'green' }}>Inc: ${income}</div>}
       </div>
     );
   };
+  
 
   return (
+    <FullCalendarStyles>
     <div>
+    <select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
+        {/* 通貨のオプションを追加 */}
+        <option value="AUD">AUD</option>
+        {/* ...他の通貨オプション */}
+      </select>
+      <select value={targetCurrency} onChange={(e) => setTargetCurrency(e.target.value)}>
+        {/* 通貨のオプションを追加 */}
+        <option value="JPY">JPY</option>
+        <option value="USD">USD</option>
+        {/* ...他の通貨オプション */}
+      </select>
+
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         dateClick={handleDateClick}
         events={calculateTotalsByDate()}
         eventContent={renderEventContent}
+        buttonText={{
+            today: 'Today'
+        }}
       />
+
+      <CurrencyExchangeRate
+        baseCurrency={baseCurrency}
+        targetCurrency={targetCurrency}
+        amount={100} // 例として100を使用
+      />
+
       {isModalOpen && (
         <Modal>
           <ModalContent>
@@ -104,13 +166,18 @@ function Dashboard() {
             <TransactionForm addTransaction={addTransaction} date={selectedDate} />
             <TransactionSection>
               <h3>Transactions for {selectedDate}</h3>
-              <TransactionList transactions={transactions.filter(t => t.date === selectedDate)} />
+              <TransactionList 
+                transactions={transactions.filter(t => t.date === selectedDate)}
+                onDelete={deleteTransaction} // ここに onDelete プロパティを追加
+              />
             </TransactionSection>
           </ModalContent>
         </Modal>
       )}
-      <TransactionList transactions={transactions} />
+
+
     </div>
+    </FullCalendarStyles>
   );
 }
 

@@ -2,13 +2,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import backgroundImage from '../images/pig1.png';
 
 const HeaderContainer = styled.header`
-  background-color: #333;
+  background-image: url(${backgroundImage});
+  background-size: cover; // 背景画像をカバーとして設定
+  background-repeat: no-repeat; // 背景画像の繰り返しを防ぐ
+  background-position: center; // 背景画像を中央に配置
   color: white;
   padding: 10px 20px;
-  text-align: center;
-  // 他のスタイリング
+  text-align: right;
+  margin-bottom: 20px;
+  font-size: 30px;
 `;
 
 const Nav = styled.nav`
