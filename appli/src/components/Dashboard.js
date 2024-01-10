@@ -76,11 +76,8 @@ function Dashboard() {
   };
 
   const addTransaction = (newTransaction) => {
-    const transactionWithId = {
-      ...newTransaction,
-      id: Date.now() // 現在のタイムスタンプをIDとして使用
-    };
-    setTransactions([...transactions, transactionWithId]);
+    // App.js の setTransactions 関数を使用して transactions 状態を更新
+    setTransactions([...transactions, newTransaction]);
     setIsModalOpen(false);
   };
   
@@ -131,6 +128,7 @@ function Dashboard() {
     );
   };
 
+
   return (
     <FullCalendarStyles>
       <div>
@@ -180,6 +178,7 @@ function Dashboard() {
         )}
       </div>
     </FullCalendarStyles>
+    
   );
 }
 
