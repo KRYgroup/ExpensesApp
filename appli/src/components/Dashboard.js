@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import TransactionForm from "./TransactionForm";
-import TransactionList from "./TransactionList";
-import styled from "styled-components";
-import backgroundImage1 from "../images/wood2.png";
-import backgroundImage2 from "../images/wood3.png";
-import CurrencyExchangeRate from "./CurrencyExchangeRate";
+import React, { useState } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import TransactionForm from './TransactionForm';
+import TransactionList from './TransactionList';
+import CurrencyExchangeRate from './CurrencyExchangeRate';
+import styled from 'styled-components';
+import backgroundImage1 from '../images/wood2.png';
+import backgroundImage2 from '../images/wood3.png';
 
 const FullCalendarStyles = styled.div`
   .fc-today-button {
