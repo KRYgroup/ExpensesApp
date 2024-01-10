@@ -1,25 +1,26 @@
-//Yosuke
-import React from "react";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement } from "chart.js";
+import React, { useState } from "react";
+import { Pie, Bar } from "react-chartjs-2";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
+const IncomeChart = ({ incomes }) => {
+  const [chartType, setChartType] = useState("pie"); // グラフの種類を管理する状態
 
-const IncomeChart = ({
-  incomes = [
-    { source: "Job", amount: 1500 },
-    { source: "Freelance", amount: 800 },
-    { source: "Other", amount: 200 },
-  ],
-}) => {
+  // カテゴリーごとに収入の合計を計算
+  const categories = [...new Set(incomes.map(item => item.source))];
+  const data = categories.map(category => {
+    return incomes
+      .filter(item => item.source === category)
+      .reduce((total, item) => total + item.amount, 0);
+  });
+
+  // グラフのデータ設定
   const chartData = {
-    labels: incomes.map((income) => income.source),
+    labels: categories,
     datasets: [
       {
         label: "Income",
-        data: incomes.map((income) => income.amount),
-        backgroundColor: ["rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)", "rgba(75, 192, 192, 0.2)"],
-        borderColor: ["rgba(54, 162, 235, 1)", "rgba(255, 206, 86, 1)", "rgba(75, 192, 192, 1)"],
+        data: data,
+        backgroundColor: 'rgba(54, 162, 235, 0.2)', // 色の設定
+        borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1,
       },
     ],
@@ -28,7 +29,12 @@ const IncomeChart = ({
   return (
     <div>
       <h2>Income Chart</h2>
-      <Pie data={chartData} />
+      <div>
+        <button onClick={() => setChartType("pie")}>Pie Chart</button>
+        <button onClick={() => setChartType("bar")}>Bar Chart</button>
+      </div>
+      {chartType === "pie" && <Pie data={chartData} />}
+      {chartType === "bar" && <Bar data={chartData} />}
     </div>
   );
 };

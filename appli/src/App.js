@@ -20,6 +20,10 @@ function App() {
   const handleBudgetSubmit = (newBudget) => {
     setBudget(newBudget);
   };
+  const [transactions, setTransactions] = useState([]); // ここで取引データを管理
+  const incomeData = transactions.filter(t => t.type === 'income');
+  const expenseData = transactions.filter(t => t.type === 'expense');
+
 
   return (
     <Router>
@@ -39,8 +43,8 @@ function App() {
                   <BudgetForm onFormSubmit={handleBudgetSubmit} /> {/* handleBudgetSubmit 関数を渡す */}
                   <BudgetOverview budget={budget} /> {/* budget 状態を渡す */}
                   <Dashboard />
-                  <ExpenseChart />
-                  <IncomeChart />
+                  <ExpenseChart expenses={expenseData} />
+                  <IncomeChart incomes={incomeData} />
                   <CurrencyExchangeRate />
                 </>
               }

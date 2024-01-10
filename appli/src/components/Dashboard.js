@@ -76,9 +76,14 @@ function Dashboard() {
   };
 
   const addTransaction = (newTransaction) => {
-    setTransactions([...transactions, newTransaction]);
+    const transactionWithId = {
+      ...newTransaction,
+      id: Date.now() // 現在のタイムスタンプをIDとして使用
+    };
+    setTransactions([...transactions, transactionWithId]);
     setIsModalOpen(false);
   };
+  
 
   const handleDateClick = (arg) => {
     setSelectedDate(arg.dateStr);
@@ -92,10 +97,6 @@ function Dashboard() {
   const handleCurrencyChange = (newBaseCurrency, newTargetCurrency) => {
     setBaseCurrency(newBaseCurrency);
     setTargetCurrency(newTargetCurrency);
-  };
-
-  const handleDelete = (id) => {
-    setTransactions(currentTransactions => currentTransactions.filter(t => t.id !== id));
   };
   
 
