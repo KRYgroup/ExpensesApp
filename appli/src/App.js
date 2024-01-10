@@ -9,6 +9,8 @@ import BudgetOverview from "./components/BudgetOverview"; // Make sure to import
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Signup from "./components/Signup";
+import SignupComplete from "./components/SignupComplete";
+import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import Loading from "./components/Loading";
 
@@ -27,6 +29,8 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/signup" element={<Signup />} />
+            <Route path="/signup-complete" element={<SignupComplete />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route
               path="/"
