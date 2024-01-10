@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import FullCalendar from '@fullcalendar/react';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
-import TransactionForm from './TransactionForm';
-import TransactionList from './TransactionList';
-import styled from 'styled-components';
-import backgroundImage1 from '../images/wood2.png';
-import backgroundImage2 from '../images/wood3.png';
-import CurrencyExchangeRate from './CurrencyExchangeRate';
+import React, { useState, useEffect } from "react";
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
+import TransactionForm from "./TransactionForm";
+import TransactionList from "./TransactionList";
+import styled from "styled-components";
+import backgroundImage1 from "../images/wood2.png";
+import backgroundImage2 from "../images/wood3.png";
+import CurrencyExchangeRate from "./CurrencyExchangeRate";
 
 const FullCalendarStyles = styled.div`
   .fc-today-button {
@@ -31,7 +31,6 @@ const FullCalendarStyles = styled.div`
     background-image: url(${backgroundImage2});
   }
 `;
-
 
 const Modal = styled.div`
   position: fixed;
@@ -69,12 +68,12 @@ function Dashboard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [transactions, setTransactions] = useState([]);
-  const [baseCurrency, setBaseCurrency] = useState('AUD'); // 基本通貨
-  const [targetCurrency, setTargetCurrency] = useState('JPY'); // 目標通過
+  const [baseCurrency, setBaseCurrency] = useState("AUD"); // 基本通貨
+  const [targetCurrency, setTargetCurrency] = useState("JPY"); // 目標通過
 
   const deleteTransaction = (transactionId) => {
-    setTransactions(transactions.filter(transaction => transaction.id !== transactionId));
-  };  
+    setTransactions(transactions.filter((transaction) => transaction.id !== transactionId));
+  };
 
   const addTransaction = (newTransaction) => {
     setTransactions([...transactions, newTransaction]);
@@ -99,7 +98,7 @@ function Dashboard() {
     const totals = transactions.reduce((acc, transaction) => {
       const { date, amount, type } = transaction;
       acc[date] = acc[date] || { expense: 0, income: 0 };
-      if (type === 'expense') {
+      if (type === "expense") {
         acc[date].expense += amount;
       } else {
         acc[date].income += amount;
@@ -107,12 +106,12 @@ function Dashboard() {
       return acc;
     }, {});
 
-    return Object.keys(totals).map(date => ({
-      title: '',
+    return Object.keys(totals).map((date) => ({
+      title: "",
       date,
       allDay: true,
-      backgroundColor: 'transparent',
-      extendedProps: totals[date]  // 支出と収入のデータを拡張プロパティに格納
+      backgroundColor: "transparent",
+      extendedProps: totals[date], // 支出と収入のデータを拡張プロパティに格納
     }));
   };
 
@@ -120,63 +119,60 @@ function Dashboard() {
     const { expense, income } = eventInfo.event.extendedProps;
     return (
       <div>
-        {expense > 0 && <div style={{ color: '#FF5F17' }}>Exp:${expense}</div>}
-        {income > 0 && <div style={{ color: 'green' }}>Inc:${income}</div>}
+        {expense > 0 && <div style={{ color: "#FF5F17" }}>Exp:${expense}</div>}
+        {income > 0 && <div style={{ color: "green" }}>Inc:${income}</div>}
       </div>
     );
   };
-  
 
   return (
     <FullCalendarStyles>
-    <div>
-    <select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
-        {/* 通貨のオプションを追加 */}
-        <option value="AUD">AUD</option>
-        {/* ...他の通貨オプション */}
-      </select>
-      <select value={targetCurrency} onChange={(e) => setTargetCurrency(e.target.value)}>
-        {/* 通貨のオプションを追加 */}
-        <option value="JPY">JPY</option>
-        <option value="USD">USD</option>
-        {/* ...他の通貨オプション */}
-      </select>
+      <div>
+        <select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
+          {/* 通貨のオプションを追加 */}
+          <option value="AUD">AUD</option>
+          {/* ...他の通貨オプション */}
+        </select>
+        <select value={targetCurrency} onChange={(e) => setTargetCurrency(e.target.value)}>
+          {/* 通貨のオプションを追加 */}
+          <option value="JPY">JPY</option>
+          <option value="USD">USD</option>
+          {/* ...他の通貨オプション */}
+        </select>
 
-      <FullCalendar
-        plugins={[dayGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        dateClick={handleDateClick}
-        events={calculateTotalsByDate()}
-        eventContent={renderEventContent}
-        buttonText={{
-            today: 'Today'
-        }}
-      />
+        <FullCalendar
+          plugins={[dayGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          dateClick={handleDateClick}
+          events={calculateTotalsByDate()}
+          eventContent={renderEventContent}
+          buttonText={{
+            today: "Today",
+          }}
+        />
 
-      <CurrencyExchangeRate
-        baseCurrency={baseCurrency}
-        targetCurrency={targetCurrency}
-        amount={100} // 例として100を使用
-      />
+        <CurrencyExchangeRate
+          baseCurrency={baseCurrency}
+          targetCurrency={targetCurrency}
+          amount={100} // 例として100を使用
+        />
 
-      {isModalOpen && (
-        <Modal>
-          <ModalContent>
-            <CloseButton onClick={closeModal}>&times;</CloseButton>
-            <TransactionForm addTransaction={addTransaction} date={selectedDate} />
-            <TransactionSection>
-              <h3>Transactions for {selectedDate}</h3>
-              <TransactionList 
-                transactions={transactions.filter(t => t.date === selectedDate)}
-                onDelete={deleteTransaction} // ここに onDelete プロパティを追加
-              />
-            </TransactionSection>
-          </ModalContent>
-        </Modal>
-      )}
-
-
-    </div>
+        {isModalOpen && (
+          <Modal>
+            <ModalContent>
+              <CloseButton onClick={closeModal}>&times;</CloseButton>
+              <TransactionForm addTransaction={addTransaction} date={selectedDate} />
+              <TransactionSection>
+                <h3>Transactions for {selectedDate}</h3>
+                <TransactionList
+                  transactions={transactions.filter((t) => t.date === selectedDate)}
+                  onDelete={deleteTransaction} // ここに onDelete プロパティを追加
+                />
+              </TransactionSection>
+            </ModalContent>
+          </Modal>
+        )}
+      </div>
     </FullCalendarStyles>
   );
 }

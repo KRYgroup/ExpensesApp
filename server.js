@@ -32,6 +32,26 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.post("/login", async (req, res) => {
+  //GET email and password from request
+  const { email, password } = req.body;
+
+  try {
+    // User validation
+    const user = await User.findOne({ email });
+    if (!user || user.password !== password) {
+      return res.status(401).json({ message: "Authentication Failed." });
+    }
+
+    // Create JWT token here (add logic to create JWT token)
+
+    //Send token to client
+    res.json({ token: "generated-jwt-token" });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
