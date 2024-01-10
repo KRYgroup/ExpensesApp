@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const app = express();
@@ -32,6 +33,8 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
 app.post("/login", async (req, res) => {
   //GET email and password from request
   const { email, password } = req.body;
@@ -43,10 +46,38 @@ app.post("/login", async (req, res) => {
       return res.status(401).json({ message: "Authentication Failed." });
     }
 
-    // Create JWT token here (add logic to create JWT token)
+    // Create JWT token
+    const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: "1h" });
 
     //Send token to client
-    res.json({ token: "generated-jwt-token" });
+    res.json({ token });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+//Endpoint for fetching user info
+app.get("/userinfo", async (req, res) => {
+  //fetch JWT token from headers
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "No token provided." });
+  }
+
+  try {
+    //validate token
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const userId = decoded.userId;
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    //remove password and send user info
+    const { password, ...userInfo } = user.toObject();
+    res.json(userInfo);
   } catch (error) {
     res.status(500).json({ message: "Server Error" });
   }
