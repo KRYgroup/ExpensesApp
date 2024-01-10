@@ -120,8 +120,8 @@ function Dashboard() {
     const { expense, income } = eventInfo.event.extendedProps;
     return (
       <div>
-        {expense > 0 && <div style={{ color: '#FF5F17' }}>Exp: ${expense}</div>}
-        {income > 0 && <div style={{ color: 'green' }}>Inc: ${income}</div>}
+        {expense > 0 && <div style={{ color: '#FF5F17' }}>Exp:${expense}</div>}
+        {income > 0 && <div style={{ color: 'green' }}>Inc:${income}</div>}
       </div>
     );
   };
