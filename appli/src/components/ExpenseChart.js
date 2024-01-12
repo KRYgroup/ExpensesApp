@@ -1,6 +1,7 @@
-//Yosuke
 import React from "react";
 import { Bar } from "react-chartjs-2";
+import { CategoryScale, Chart as ChartJS, BarElement, LinearScale, Title, Tooltip, Legend } from "chart.js";
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const ExpenseChart = ({
   expenses = [
