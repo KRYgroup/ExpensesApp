@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const jwt = require("jsonwebtoken");
+//const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const app = express();
@@ -33,7 +33,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-const JWT_SECRET = process.env.JWT_SECRET;
+/*const JWT_SECRET = process.env.JWT_SECRET;
 
 app.post("/login", async (req, res) => {
   //GET email and password from request
@@ -82,6 +82,7 @@ app.get("/userinfo", async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 });
+*/
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
