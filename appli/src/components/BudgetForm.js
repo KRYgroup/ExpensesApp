@@ -1,37 +1,51 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import backgroundImage1 from '../images/wood1.png';
-import backgroundImage2 from '../images/wood2.png';
+import React, { useState } from "react";
+import styled from "styled-components";
+import backgroundImage1 from "../images/wood1.png";
+import backgroundImage2 from "../images/wood2.png";
 
 function BudgetForm({ onFormSubmit }) {
-    const [budget, setBudget] = useState('');
-  
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      onFormSubmit(budget);
-      setBudget('');
-    };
-  
-    return (
-      <StyledBudgetForm onSubmit={handleSubmit}>
-        <label htmlFor="budget">Set Your Budget:</label>
-        <input
-          type="number"
-          id="budget"
-          name="budget"
-          value={budget}
-          onChange={(e) => setBudget(e.target.value)}
-          required
-        />
-        <button type="submit">Submit</button>
-      </StyledBudgetForm>
-    );
-  }  
+  const [budget, setBudget] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch("http://localhost:3001/update-budget", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ budget: budget }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        onFormSubmit(budget);
+        console.log("Budget updated:", data.message);
+      } else {
+        console.error("Error updating budget:", data.message);
+      }
+    } catch (error) {
+      console.error("Error updating budget:", error);
+    }
+
+    setBudget("");
+  };
+
+  return (
+    <StyledBudgetForm onSubmit={handleSubmit}>
+      <label htmlFor="budget">Set Your Budget:</label>
+      <input type="number" id="budget" name="budget" value={budget} onChange={(e) => setBudget(e.target.value)} required />
+      <button type="submit">Submit</button>
+    </StyledBudgetForm>
+  );
+}
 
 export default BudgetForm;
 
 const StyledBudgetForm = styled.form`
-
   text-align: left;
   margin-top: 30px;
 
@@ -44,7 +58,7 @@ const StyledBudgetForm = styled.form`
 
   input {
     margin-left: 10px;
-    background-color: #FFEFD5; 
+    background-color: #ffefd5;
     padding: 10px;
     border: none;
     border-radius: 5px;
