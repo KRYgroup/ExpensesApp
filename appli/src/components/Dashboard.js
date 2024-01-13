@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-//add useEffect later
+import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -9,7 +8,7 @@ import CurrencyExchangeRate from "./CurrencyExchangeRate";
 import styled from "styled-components";
 import backgroundImage1 from "../images/wood2.png";
 import backgroundImage2 from "../images/wood3.png";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const FullCalendarStyles = styled.div`
   .fc-today-button {
@@ -43,14 +42,15 @@ const Modal = styled.div`
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
+  margin: 0 auto;
 `;
 
 const ModalContent = styled.div`
   background-color: #fefefe;
   margin: 15% auto;
-  padding: 20px;
+  padding: 10px;
   border: 1px solid #888;
-  width: 80%;
+  width: 40%;
   overflow-y: auto; // コンテンツが多い場合にスクロール可能にする
 `;
 
@@ -72,8 +72,8 @@ const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
   const [baseCurrency, setBaseCurrency] = useState("AUD"); // 基本通貨
   const [targetCurrency, setTargetCurrency] = useState("JPY"); // 目標通過
-  //const [userInfo, setUserInfo] = useState(null);
-  //const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(null);
+  const navigate = useNavigate();
 
   const deleteTransaction = (transactionId) => {
     setTransactions(transactions.filter((transaction) => transaction.id !== transactionId));
@@ -130,20 +130,25 @@ const Dashboard = () => {
     );
   };
 
-  /*useEffect(() => {
-    //Get token
+  useEffect(() => {
+    // JWTトークンをローカルストレージから取得
     const token = localStorage.getItem("token");
 
-    //Function to get user info
+    // ユーザー情報を取得する関数
     const fetchUserInfo = async () => {
       try {
         const response = await fetch("http://localhost:3001/userinfo", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const data = await response.json();
-        setUserInfo(data);
+        if (response.ok) {
+          const data = await response.json();
+          setUserInfo(data);
+        } else {
+          throw new Error("User info fetch failed");
+        }
       } catch (error) {
         console.error("Error fetching user info:", error);
+        navigate("/login");
       }
     };
 
@@ -152,57 +157,59 @@ const Dashboard = () => {
     } else {
       navigate("/login");
     }
-  }, [navigate]);*/
+  }, [navigate]);
 
   return (
     <FullCalendarStyles>
       {/* user info display {(userInfo && () */}
-      <div>
-        <select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
-          {/* 通貨のオプションを追加 */}
-          <option value="AUD">AUD</option>
-          {/* ...他の通貨オプション */}
-        </select>
-        <select value={targetCurrency} onChange={(e) => setTargetCurrency(e.target.value)}>
-          {/* 通貨のオプションを追加 */}
-          <option value="JPY">JPY</option>
-          <option value="USD">USD</option>
-          {/* ...他の通貨オプション */}
-        </select>
+      {userInfo && (
+        <div>
+          <select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
+            {/* 通貨のオプションを追加 */}
+            <option value="AUD">AUD</option>
+            {/* ...他の通貨オプション */}
+          </select>
+          <select value={targetCurrency} onChange={(e) => setTargetCurrency(e.target.value)}>
+            {/* 通貨のオプションを追加 */}
+            <option value="JPY">JPY</option>
+            <option value="USD">USD</option>
+            {/* ...他の通貨オプション */}
+          </select>
 
-        <FullCalendar
-          plugins={[dayGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          dateClick={handleDateClick}
-          events={calculateTotalsByDate()}
-          eventContent={renderEventContent}
-          buttonText={{
-            today: "Today",
-          }}
-        />
+          <FullCalendar
+            plugins={[dayGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            dateClick={handleDateClick}
+            events={calculateTotalsByDate()}
+            eventContent={renderEventContent}
+            buttonText={{
+              today: "Today",
+            }}
+          />
 
-        <CurrencyExchangeRate
-          baseCurrency={baseCurrency}
-          targetCurrency={targetCurrency}
-          amount={100} // 例として100を使用
-        />
+          <CurrencyExchangeRate
+            baseCurrency={baseCurrency}
+            targetCurrency={targetCurrency}
+            amount={100} // 例として100を使用
+          />
 
-        {isModalOpen && (
-          <Modal>
-            <ModalContent>
-              <CloseButton onClick={closeModal}>&times;</CloseButton>
-              <TransactionForm addTransaction={addTransaction} date={selectedDate} />
-              <TransactionSection>
-                <h3>Transactions for {selectedDate}</h3>
-                <TransactionList
-                  transactions={transactions.filter((t) => t.date === selectedDate)}
-                  onDelete={deleteTransaction} // ここに onDelete プロパティを追加
-                />
-              </TransactionSection>
-            </ModalContent>
-          </Modal>
-        )}
-      </div>
+          {isModalOpen && (
+            <Modal>
+              <ModalContent>
+                <CloseButton onClick={closeModal}>&times;</CloseButton>
+                <TransactionForm addTransaction={addTransaction} date={selectedDate} />
+                <TransactionSection>
+                  <h3>Transactions for {selectedDate}</h3>
+                  <TransactionList
+                    transactions={transactions.filter((t) => t.date === selectedDate)}
+                    onDelete={deleteTransaction} // ここに onDelete プロパティを追加
+                  />
+                </TransactionSection>
+              </ModalContent>
+            </Modal>
+          )}
+        </div>
+      )}
     </FullCalendarStyles>
   );
 };

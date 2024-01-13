@@ -1,8 +1,9 @@
 // Header.js
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import backgroundImage from '../images/pig1.png';
+import React from "react";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+import backgroundImage from "../images/pig1.png";
+import Logout from "./Logout";
 
 const HeaderContainer = styled.header`
   background-image: url(${backgroundImage});
@@ -36,8 +37,7 @@ const Header = () => {
       <h1>ExpensesApp</h1>
       <Nav>
         <StyledLink to="/">Dashboard</StyledLink>
-        <StyledLink to="/about">Transaction Form</StyledLink>
-        <StyledLink to="/contact">Transaction List</StyledLink> {/*to 以降随時変更*/}
+        <Logout />
       </Nav>
     </HeaderContainer>
   );

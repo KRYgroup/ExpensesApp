@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-//const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const app = express();
@@ -33,7 +33,7 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-/*const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 app.post("/login", async (req, res) => {
   //GET email and password from request
@@ -42,16 +42,24 @@ app.post("/login", async (req, res) => {
   try {
     // User validation
     const user = await User.findOne({ email });
-    if (!user || user.password !== password) {
-      return res.status(401).json({ message: "Authentication Failed." });
+    if (!user) {
+      console.log("User not found:", email);
+      return res.status(401).json({ message: "Authentication Failed. User not found." });
+    }
+    if (user.password !== password) {
+      console.log("Incorrect password for user:", email);
+      return res.status(401).json({ message: "Authentication Failed. Incorrect password." });
     }
 
     // Create JWT token
+    console.log("Creating token for user:", user._id);
     const token = jwt.sign({ userId: user._id }, JWT_SECRET, { expiresIn: "1h" });
 
     //Send token to client
+    console.log("Token created, sending to client:", token);
     res.json({ token });
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).json({ message: "Server Error" });
   }
 });
@@ -69,20 +77,19 @@ app.get("/userinfo", async (req, res) => {
     //validate token
     const decoded = jwt.verify(token, JWT_SECRET);
     const userId = decoded.userId;
-    const user = await User.findById(userId);
+
+    const user = await User.findById(userId).select("-password");
 
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }
 
     //remove password and send user info
-    const { password, ...userInfo } = user.toObject();
-    res.json(userInfo);
+    res.json(user);
   } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ message: "Invalid Token" });
   }
 });
-*/
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
