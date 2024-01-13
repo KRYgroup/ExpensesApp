@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ onUpdateUser }) => {
+const Login = ({ onUpdateUser, onBudgetUpdate }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ const Login = ({ onUpdateUser }) => {
       if (response.status === 200) {
         localStorage.setItem("token", data.token);
         fetchUserInfo(data.token, onUpdateUser);
+        fetchUserBudget(data.token);
         navigate("/");
       } else {
         alert(data.message);
@@ -41,6 +42,22 @@ const Login = ({ onUpdateUser }) => {
       }
     } catch (error) {
       console.error("Error fetching user info:", error);
+    }
+  };
+
+  const fetchUserBudget = async (token) => {
+    try {
+      const response = await fetch("http://localhost:3001/user-budget", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        onBudgetUpdate(data.budget);
+      } else {
+        console.error("Error fetching user budget:", data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching user budget:", error);
     }
   };
 
