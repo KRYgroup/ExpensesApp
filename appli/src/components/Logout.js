@@ -1,3 +1,4 @@
+// Logout.js
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +7,7 @@ const Logout = ({ onLogout }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    onLogout();
     navigate("/login");
   };
 

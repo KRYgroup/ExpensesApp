@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { HashRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import ExpenseChart from "./components/ExpenseChart";
 import IncomeChart from "./components/IncomeChart";
@@ -25,12 +25,16 @@ function App() {
   const expenseData = transactions.filter((t) => t.type === "expense");
   const [userInfo, setUserInfo] = useState(null);
 
+  const updateUser = (userInfo) => {
+    setUserInfo(userInfo);
+  };
+
   useEffect(() => {
-    // JWTトークンをローカルストレージから取得
     const token = localStorage.getItem("token");
     if (token) {
-      // ユーザー情報の取得
       fetchUserInfo(token);
+    } else {
+      setUserInfo(null);
     }
   }, []);
 
@@ -48,7 +52,7 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setUserInfo(null); // ユーザー情報をクリア
+    setUserInfo(null);
   };
 
   return (
@@ -60,7 +64,7 @@ function App() {
           <Routes>
             <Route path="/signup" element={<Signup />} />
             <Route path="/signup-complete" element={<SignupComplete />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login onUpdateUser={updateUser} />} />
             <Route path="/dashboard" element={<Dashboard transactions={transactions} setTransactions={setTransactions} />} />
             <Route
               path="/"

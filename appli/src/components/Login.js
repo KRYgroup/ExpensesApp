@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({ onLogin }) => {
+const Login = ({ onUpdateUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -20,12 +20,27 @@ const Login = ({ onLogin }) => {
       const data = await response.json();
       if (response.status === 200) {
         localStorage.setItem("token", data.token);
-        navigate("/dashboard");
+        fetchUserInfo(data.token, onUpdateUser);
+        navigate("/");
       } else {
         alert(data.message);
       }
     } catch (error) {
       console.error("Login error:", error);
+    }
+  };
+
+  const fetchUserInfo = async (token, onUpdateUser) => {
+    try {
+      const response = await fetch("http://localhost:3001/userinfo", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.ok) {
+        const userInfo = await response.json();
+        onUpdateUser(userInfo);
+      }
+    } catch (error) {
+      console.error("Error fetching user info:", error);
     }
   };
 
