@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-//add useEffect later
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -9,7 +8,6 @@ import CurrencyExchangeRate from "./CurrencyExchangeRate";
 import styled from "styled-components";
 import backgroundImage1 from "../images/wood2.png";
 import backgroundImage2 from "../images/wood3.png";
-//import { useNavigate } from "react-router-dom";
 
 const FullCalendarStyles = styled.div`
   .fc-today-button {
@@ -43,14 +41,15 @@ const Modal = styled.div`
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
+  margin: 0 auto;
 `;
 
 const ModalContent = styled.div`
   background-color: #fefefe;
   margin: 15% auto;
-  padding: 20px;
+  padding: 10px;
   border: 1px solid #888;
-  width: 80%;
+  width: 40%;
   overflow-y: auto; // コンテンツが多い場合にスクロール可能にする
 `;
 
@@ -72,8 +71,6 @@ const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
   const [baseCurrency, setBaseCurrency] = useState("AUD"); // 基本通貨
   const [targetCurrency, setTargetCurrency] = useState("JPY"); // 目標通過
-  //const [userInfo, setUserInfo] = useState(null);
-  //const navigate = useNavigate();
 
   const deleteTransaction = (transactionId) => {
     setTransactions(transactions.filter((transaction) => transaction.id !== transactionId));
@@ -131,19 +128,24 @@ const Dashboard = () => {
   };
 
   /*useEffect(() => {
-    //Get token
+    // JWTトークンをローカルストレージから取得
     const token = localStorage.getItem("token");
 
-    //Function to get user info
+    // ユーザー情報を取得する関数
     const fetchUserInfo = async () => {
       try {
         const response = await fetch("http://localhost:3001/userinfo", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const data = await response.json();
-        setUserInfo(data);
+        if (response.ok) {
+          const data = await response.json();
+          setUserInfo(data);
+        } else {
+          throw new Error("User info fetch failed");
+        }
       } catch (error) {
         console.error("Error fetching user info:", error);
+        navigate("/login");
       }
     };
 
@@ -156,7 +158,6 @@ const Dashboard = () => {
 
   return (
     <FullCalendarStyles>
-      {/* user info display {(userInfo && () */}
       <div>
         <select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
           {/* 通貨のオプションを追加 */}

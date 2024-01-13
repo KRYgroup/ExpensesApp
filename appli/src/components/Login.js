@@ -8,9 +8,6 @@ const Login = ({ onLogin }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    //Deploy Login functions here
-    //onLogin(email, password);
-
     try {
       const response = await fetch("http://localhost:3001/login", {
         method: "POST",
@@ -22,10 +19,7 @@ const Login = ({ onLogin }) => {
 
       const data = await response.json();
       if (response.status === 200) {
-        //Save tokens to local storage
         localStorage.setItem("token", data.token);
-
-        //Redirect to User info display
         navigate("/dashboard");
       } else {
         alert(data.message);
