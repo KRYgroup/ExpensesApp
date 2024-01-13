@@ -31,6 +31,18 @@ const StyledLink = styled(Link)`
   }
 `;
 
+const Logout = styled.button`
+  background-color: #BBBBBB;
+  color: black;
+  font-weight: bold;
+  border: 1px, solid, black;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: ${({ size }) => size ? `${size / 3}px ${size}px` : '10px 20px'};
+  font-size: ${({ fontSize }) => fontSize || '16px'};
+  margin-left: 10px;
+`;
+
 const Header = ({ userInfo }) => {
   const navigate = useNavigate();
 
@@ -45,7 +57,7 @@ const Header = ({ userInfo }) => {
       <Nav>
         <StyledLink to="/">Charts</StyledLink>
         {userInfo && <p>Welcome, {userInfo.name}</p>}
-        <button onClick={handleLogout}>Logout</button>
+        <Logout onClick={handleLogout}>Logout</Logout>
       </Nav>
     </HeaderContainer>
   );
