@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from 'styled-components';
+import styled from "styled-components";
 import backgroundImage1 from "../images/signup.png";
 
 const LoginContainer = styled.div`
@@ -8,7 +8,6 @@ const LoginContainer = styled.div`
   background-size: cover;
   background-position: center center;
   padding: 20px;
-  border-radius: 10px;
   height: 100vh;
   display: flex;
   align-items: center; // 水平方向の位置を中央に
@@ -115,20 +114,20 @@ const Login = ({ onUpdateUser, onBudgetUpdate }) => {
 
   return (
     <LoginContainer>
-    <div>
-      <Form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-        <div>
-          <label>Email:</label>
-          <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div>
-        <div>
-          <label>Password:</label>
-          <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <Button type="submit">Login</Button>
-      </Form>
-    </div>
+      <div>
+        <Form onSubmit={handleSubmit}>
+          <h2>Login</h2>
+          <div>
+            <label>Email:</label>
+            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div>
+            <label>Password:</label>
+            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <Button type="submit">Login</Button>
+        </Form>
+      </div>
     </LoginContainer>
   );
 };

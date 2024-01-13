@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import styled from 'styled-components';
+import styled from "styled-components";
 import backgroundImage1 from "../images/signup.png";
 
 const SignupContainer = styled.div`
@@ -8,7 +8,6 @@ const SignupContainer = styled.div`
   background-size: cover;
   background-position: center center;
   padding: 20px;
-  border-radius: 10px;
   height: 100vh;
   display: flex;
   align-items: center; // 水平方向の位置を中央に
@@ -53,7 +52,6 @@ const Button = styled.button`
   }
 `;
 
-
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -92,31 +90,31 @@ const Signup = () => {
 
   return (
     <SignupContainer>
-    <div>
-      <Form onSubmit={handleSubmit}>
-      <h2>Signup</h2>
-        <div>
-          <label>Name:</label>
-          <Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        </div>
-        <div>
-          <label>Email:</label>
-          <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div>
-        <div>
-          <label>Password:</label>
-          <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <div>
-          <label>Confirm Password:</label>
-          <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-        </div>
-        <Button type="submit">Signup</Button>
-        <p>
-        Already have an account? <Link to="/login">Log in here</Link> {/* Link to login page */}
-      </p>
-      </Form>
-    </div>
+      <div>
+        <Form onSubmit={handleSubmit}>
+          <h2>Signup</h2>
+          <div>
+            <label>Name:</label>
+            <Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          </div>
+          <div>
+            <label>Email:</label>
+            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </div>
+          <div>
+            <label>Password:</label>
+            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          <div>
+            <label>Confirm Password:</label>
+            <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+          </div>
+          <Button type="submit">Signup</Button>
+          <p>
+            Already have an account? <Link to="/login">Log in here</Link> {/* Link to login page */}
+          </p>
+        </Form>
+      </div>
     </SignupContainer>
   );
 };
