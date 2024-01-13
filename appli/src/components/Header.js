@@ -2,8 +2,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import backgroundImage from "../images/pig1.png";
-import Logout from "./Logout";
 
 const HeaderContainer = styled.header`
   background-image: url(${backgroundImage});
@@ -31,13 +31,21 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const Header = () => {
+const Header = ({ userInfo }) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
   return (
     <HeaderContainer>
       <h1>ExpensesApp</h1>
       <Nav>
-        <StyledLink to="/">Dashboard</StyledLink>
-        <Logout />
+        <StyledLink to="/">Charts</StyledLink>
+        {userInfo && <p>Welcome, {userInfo.name}</p>}
+        <button onClick={handleLogout}>Logout</button>
       </Nav>
     </HeaderContainer>
   );
