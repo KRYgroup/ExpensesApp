@@ -1,4 +1,47 @@
 import React, { useState, useEffect } from 'react';
+import styled from "styled-components";
+import backgroundImage1 from "../images/wood2.png";
+
+const Form = styled.form`
+  background-image: url(${backgroundImage1});
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #aaa;
+  width: 70%; // 幅を75%に設定
+  margin: 0 auto;
+
+  input, select, button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #888;
+    border-radius: 4px;
+  }
+
+  button {
+    background-color: #EEE8AA;
+    color: black;
+    font-weight: bold;
+  }
+
+  input, select, button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #888;
+    border-radius: 4px;
+    box-sizing: border-box; // Add this line
+  }
+
+  select {
+    -webkit-appearance: none; // for Chrome, Safari, and Opera
+    -moz-appearance: none; // for Firefox
+    appearance: none;
+    // Reapply any custom styles you need here
+  }
+`;
 
 function TransactionForm({ addTransaction, date }) {
   const [amount, setAmount] = useState('');
@@ -8,7 +51,7 @@ function TransactionForm({ addTransaction, date }) {
   const [categories, setCategories] = useState([]);
 
   const expenseCategories = [
-    'food', 'social life', 'transport', 'pets', 'culture', 'household', 'apparel', 'beauty', 'health', 'education', 'gift'
+    'food 🍔', 'social life 🍺', 'transport 🚞', 'pets 🐶', 'household 🏡', 'apparel 👔', 'beauty 💄', 'health 💊', 'education 🎓', 'gift 🎁'
   ];
 
   const incomeCategories = ['salary', 'invest', 'interest', 'split bill'];
@@ -36,7 +79,7 @@ function TransactionForm({ addTransaction, date }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="Amount" />
       <select value={type} onChange={e => setType(e.target.value)}>
         <option value="expense">Expense</option>
@@ -52,7 +95,7 @@ function TransactionForm({ addTransaction, date }) {
         <input type="text" value={newCategory} onChange={e => setNewCategory(e.target.value)} placeholder="Description" />
       )}
       <button type="submit">Submit</button>
-    </form>
+    </Form>
   );
 }
 
