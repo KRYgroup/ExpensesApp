@@ -16,12 +16,14 @@ const LoginContainer = styled.div`
 `;
 
 const Form = styled.form`
-  background-color: rgba(220, 220, 220, 0.95);
+  background-color: rgba(255, 255, 255, 0.95);
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
+  margin-left: auto; // 左側に自動のマージンを設定し、右側に寄せる
+  margin-right: 0; // 右側のマージンを0に設定
 `;
 
 const Input = styled.input`

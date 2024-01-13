@@ -61,6 +61,12 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!name || !email || !password || !confirmPassword) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
       return;
