@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import backgroundImage1 from "../images/wood2.png";
 
@@ -10,7 +10,9 @@ const Form = styled.form`
   width: 70%; // 幅を75%に設定
   margin: 0 auto;
 
-  input, select, button {
+  input,
+  select,
+  button {
     display: block;
     width: 100%;
     margin-bottom: 10px;
@@ -20,12 +22,14 @@ const Form = styled.form`
   }
 
   button {
-    background-color: #EEE8AA;
+    background-color: #eee8aa;
     color: black;
     font-weight: bold;
   }
 
-  input, select, button {
+  input,
+  select,
+  button {
     display: block;
     width: 100%;
     margin-bottom: 10px;
@@ -44,56 +48,53 @@ const Form = styled.form`
 `;
 
 function TransactionForm({ addTransaction, date }) {
-  const [amount, setAmount] = useState('');
-  const [category, setCategory] = useState('');
-  const [newCategory, setNewCategory] = useState('');
-  const [type, setType] = useState('expense');
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("");
+  const [newCategory, setNewCategory] = useState("");
+  const [type, setType] = useState("expense");
   const [categories, setCategories] = useState([]);
 
-  const expenseCategories = [
-    'food 🍔', 'social life 🍺', 'transport 🚞', 'pets 🐶', 'household 🏡', 'apparel 👔', 'beauty 💄', 'health 💊', 'education 🎓', 'gift 🎁'
-  ];
-
-  const incomeCategories = ['salary', 'invest', 'interest', 'split bill'];
-
   useEffect(() => {
-    // 取引タイプに応じてカテゴリリストを設定
-    if (type === 'expense') {
+    const expenseCategories = ["food 🍔", "social life 🍺", "transport 🚞", "pets 🐶", "household 🏡", "apparel 👔", "beauty 💄", "health 💊", "education 🎓", "gift 🎁"];
+
+    const incomeCategories = ["salary", "invest", "interest", "split bill"];
+
+    if (type === "expense") {
       setCategories(expenseCategories);
       setCategory(expenseCategories[0]);
-    } else if (type === 'income') {
+    } else if (type === "income") {
       setCategories(incomeCategories);
       setCategory(incomeCategories[0]);
     }
-    setNewCategory('');
+    setNewCategory("");
   }, [type]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const categoryValue = category === 'other' ? newCategory : category;
+    const categoryValue = category === "other" ? newCategory : category;
     addTransaction({ date, category: categoryValue, amount: parseFloat(amount), type });
-    setAmount('');
-    setCategory('');
-    setNewCategory('');
-    setType('expense');
+    setAmount("");
+    setCategory("");
+    setNewCategory("");
+    setType("expense");
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <input type="number" value={amount} onChange={e => setAmount(e.target.value)} placeholder="Amount" />
-      <select value={type} onChange={e => setType(e.target.value)}>
+      <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount" />
+      <select value={type} onChange={(e) => setType(e.target.value)}>
         <option value="expense">Expense</option>
         <option value="income">Income</option>
       </select>
-      <select value={category} onChange={e => setCategory(e.target.value)}>
-        {categories.map(cat => (
-          <option key={cat} value={cat}>{cat}</option>
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        {categories.map((cat) => (
+          <option key={cat} value={cat}>
+            {cat}
+          </option>
         ))}
         <option value="other">Other</option>
       </select>
-      {category === 'other' && (
-        <input type="text" value={newCategory} onChange={e => setNewCategory(e.target.value)} placeholder="Description" />
-      )}
+      {category === "other" && <input type="text" value={newCategory} onChange={(e) => setNewCategory(e.target.value)} placeholder="Description" />}
       <button type="submit">Submit</button>
     </Form>
   );
