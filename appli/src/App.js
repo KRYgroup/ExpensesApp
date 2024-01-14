@@ -13,11 +13,8 @@ import UserDashboard from "./components/UserDashboard";
 const HeaderWrapper = ({ userInfo, onLogout }) => {
   const location = useLocation();
 
-  return !["/signup", "/login", "/signup-complete", "/welcomepage"].includes(location.pathname)
-    ? <Header userInfo={userInfo} onLogout={onLogout} />
-    : null;
+  return !["/signup", "/login", "/signup-complete", "/"].includes(location.pathname) ? <Header userInfo={userInfo} onLogout={onLogout} /> : null;
 };
-
 
 function App() {
   const [budget, setBudget] = useState(0);
@@ -105,7 +102,7 @@ function App() {
         <HeaderWrapper userInfo={userInfo} onLogout={handleLogout} />
         <div className="content">
           <Routes>
-            <Route path="/welcomepage" element={<WelcomePage />} />
+            <Route path="/" element={<WelcomePage />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signup-complete" element={<SignupComplete />} />
             <Route path="/login" element={<Login onUpdateUser={updateUser} onBudgetUpdate={updateBudget} />} />

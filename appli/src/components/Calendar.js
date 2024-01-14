@@ -104,13 +104,18 @@ const Calendar = () => {
       return acc;
     }, {});
 
-    return Object.keys(totals).map((date) => ({
-      title: "",
-      date,
-      allDay: true,
-      backgroundColor: "transparent",
-      extendedProps: totals[date], // 支出と収入のデータを拡張プロパティに格納
-    }));
+    const events = Object.keys(totals).map((date) => {
+      const event = {
+        title: "",
+        date,
+        allDay: true,
+        backgroundColor: "transparent",
+        extendedProps: totals[date],
+      };
+      return event;
+    });
+
+    return events;
   };
 
   const renderEventContent = (eventInfo) => {
