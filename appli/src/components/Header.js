@@ -56,7 +56,7 @@ const Header = ({ userInfo }) => {
       <h1>ExpensesApp</h1>
       <Nav>
         <StyledLink to="/">Charts</StyledLink>
-        {userInfo && <p>Welcome, {userInfo.name}</p>}
+        {userInfo && <p>Welcome, {userInfo.name}!</p>}
         <Logout onClick={handleLogout}>Logout</Logout>
       </Nav>
     </HeaderContainer>
