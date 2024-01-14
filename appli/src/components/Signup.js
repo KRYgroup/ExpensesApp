@@ -90,8 +90,6 @@ const Signup = () => {
     } catch (error) {
       console.error("Signup error:", error);
     }
-    //Deploy Signup functions here
-    // Ex) Request for API, validation of user input
   };
 
   return (
