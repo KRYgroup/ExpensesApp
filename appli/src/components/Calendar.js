@@ -74,23 +74,22 @@ const Dashboard = () => {
 
   const deleteTransaction = (transactionId) => {
     setTransactions(transactions.filter((transaction) => transaction.id !== transactionId));
-  };  
+  };
 
   const formatDate = (dateString) => {
-    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+    const options = { day: "2-digit", month: "2-digit", year: "numeric" };
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB', options);
+    return date.toLocaleDateString("en-GB", options);
   };
 
   const addTransaction = (newTransaction) => {
     const transactionWithId = {
       ...newTransaction,
-      id: Date.now() // 現在のタイムスタンプを ID として使用
+      id: Date.now(), // 現在のタイムスタンプを ID として使用
     };
     setTransactions([...transactions, transactionWithId]);
     setIsModalOpen(false);
   };
-  
 
   const handleDateClick = (arg) => {
     setSelectedDate(arg.dateStr);
@@ -198,7 +197,7 @@ const Dashboard = () => {
           amount={100} // 例として100を使用
         />
 
-{isModalOpen && (
+        {isModalOpen && (
           <Modal>
             <ModalContent>
               <CloseButton onClick={closeModal}>&times;</CloseButton>
@@ -206,10 +205,7 @@ const Dashboard = () => {
               <TransactionSection>
                 {/* ここで formatDate を使用して selectedDate をフォーマットします */}
                 <h3>Transactions for {formatDate(selectedDate)}</h3>
-                <TransactionList
-                  transactions={transactions.filter((t) => formatDate(t.date) === formatDate(selectedDate))}
-                  onDelete={deleteTransaction}
-                />
+                <TransactionList transactions={transactions.filter((t) => formatDate(t.date) === formatDate(selectedDate))} onDelete={deleteTransaction} />
               </TransactionSection>
             </ModalContent>
           </Modal>

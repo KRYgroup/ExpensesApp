@@ -73,7 +73,7 @@ const Login = ({ onUpdateUser, onBudgetUpdate }) => {
         localStorage.setItem("token", data.token);
         fetchUserInfo(data.token, onUpdateUser);
         fetchUserBudget(data.token);
-        navigate("/");
+        navigate("/dashboard");
       } else {
         alert(data.message);
       }

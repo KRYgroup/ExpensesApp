@@ -1,23 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
-import ExpenseChart from "./components/ExpenseChart";
-import IncomeChart from "./components/IncomeChart";
-import CurrencyExchangeRate from "./components/CurrencyExchangeRate";
-import BudgetForm from "./components/BudgetForm";
-import BudgetOverview from "./components/BudgetOverview";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Signup from "./components/Signup";
 import SignupComplete from "./components/SignupComplete";
 import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
 import Loading from "./components/Loading";
+import WelcomePage from "./components/WelcomePage";
+//import Calendar from "./components/Calendar";
+import UserDashboard from "./components/UserDashboard";
 
-const HeaderWrapper = () => {
+const HeaderWrapper = ({ userInfo, onLogout }) => {
   const location = useLocation();
 
-  return location.pathname !== "/signup" && location.pathname !== "/login" ? <Header /> : null;
+  return location.pathname !== "/signup" && location.pathname !== "/login" ? <Header userInfo={userInfo} onLogout={onLogout} /> : null;
 };
 
 function App() {
@@ -26,9 +23,9 @@ function App() {
   const handleBudgetSubmit = (newBudget) => {
     setBudget(newBudget);
   };
-  const [transactions, setTransactions] = useState([]); // ここで取引データを管理
-  const incomeData = transactions.filter((t) => t.type === "income");
-  const expenseData = transactions.filter((t) => t.type === "expense");
+  //const [transactions, setTransactions] = useState([]); // ここで取引データを管理
+  //const incomeData = transactions.filter((t) => t.type === "income");
+  //const expenseData = transactions.filter((t) => t.type === "expense");
   const [userInfo, setUserInfo] = useState(null);
 
   const updateUser = (userInfo) => {
@@ -85,27 +82,16 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {isLoading && <Loading />} {/* ローディングが true の場合にローディングコンポーネントを表示 */}
+        {isLoading && <Loading />}
         <HeaderWrapper userInfo={userInfo} onLogout={handleLogout} />
         <div className="content">
           <Routes>
+            <Route path="/" element={<WelcomePage />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signup-complete" element={<SignupComplete />} />
             <Route path="/login" element={<Login onUpdateUser={updateUser} onBudgetUpdate={updateBudget} />} />
-            <Route path="/dashboard" element={<Dashboard transactions={transactions} setTransactions={setTransactions} />} />
-            <Route
-              path="/"
-              element={
-                <>
-                  <BudgetForm onFormSubmit={handleBudgetSubmit} /> {/* handleBudgetSubmit 関数を渡す */}
-                  <BudgetOverview budget={budget} /> {/* budget 状態を渡す */}
-                  <Dashboard />
-                  <ExpenseChart expenses={expenseData} />
-                  <IncomeChart incomes={incomeData} />
-                  <CurrencyExchangeRate />
-                </>
-              }
-            />
+            {/* <Route path="/calendar" element={<Calendar transactions={transactions} setTransactions={setTransactions} />} /> */}
+            <Route path="/dashboard" element={<UserDashboard onBudgetSubmit={handleBudgetSubmit} budget={budget} />} />
           </Routes>
         </div>
         <Footer />
