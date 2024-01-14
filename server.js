@@ -14,15 +14,25 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.error(err));
 
+//Schema
+const TransactionSchema = new mongoose.Schema({
+  data: String,
+  type: String,
+  amount: Number,
+  category: String,
+});
+
 const UserSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
   budget: { type: Number, default: 0 },
+  transactions: [TransactionSchema],
 });
 
 const User = mongoose.model("userinfo", UserSchema);
 
+//SignUp
 app.post("/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -34,8 +44,8 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+//Login
 const JWT_SECRET = process.env.JWT_SECRET;
-
 app.post("/login", async (req, res) => {
   //GET email and password from request
   const { email, password } = req.body;
@@ -134,6 +144,80 @@ app.get("/user-budget", async (req, res) => {
     res.json({ budget: user.budget });
   } catch (error) {
     res.status(500).json({ message: "Invalid Token" });
+  }
+});
+
+//Endpoint for fetching transactions
+app.get("/transactions", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "No token provided." });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.json(user.transactions);
+  } catch (error) {
+    console.error("Error fetching transactions:", error);
+    res.status(500).json({ message: "Invalid Token" });
+  }
+});
+
+//Add a transaction
+app.post("/transactions", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "No token provided." });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    const newTransaction = req.body;
+    user.transactions.push(newTransaction);
+    await user.save();
+    res.status(201).json(newTransaction);
+  } catch (error) {
+    console.error("Error adding transaction:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
+//Delete a transaction
+app.delete("/transactions/:transactionId", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "No token provided." });
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const user = await User.findById(decoded.userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    user.transactions = user.transactions.filter((t) => t._id != req.params.transactionId);
+    await user.save();
+    res.status(200).json({ message: "Transaction deleted" });
+  } catch (error) {
+    console.error("Error deleting transaction:", error);
+    res.status(500).json({ message: "Server Error" });
   }
 });
 

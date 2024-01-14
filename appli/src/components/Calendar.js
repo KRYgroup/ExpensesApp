@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -65,30 +65,17 @@ const TransactionSection = styled.div`
   margin-top: 20px;
 `;
 
-const Dashboard = () => {
+const Calendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [transactions, setTransactions] = useState([]);
   const [baseCurrency, setBaseCurrency] = useState("AUD"); // 基本通貨
   const [targetCurrency, setTargetCurrency] = useState("JPY"); // 目標通過
 
-  const deleteTransaction = (transactionId) => {
-    setTransactions(transactions.filter((transaction) => transaction.id !== transactionId));
-  };
-
   const formatDate = (dateString) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
     const date = new Date(dateString);
     return date.toLocaleDateString("en-GB", options);
-  };
-
-  const addTransaction = (newTransaction) => {
-    const transactionWithId = {
-      ...newTransaction,
-      id: Date.now(), // 現在のタイムスタンプを ID として使用
-    };
-    setTransactions([...transactions, transactionWithId]);
-    setIsModalOpen(false);
   };
 
   const handleDateClick = (arg) => {
@@ -136,34 +123,57 @@ const Dashboard = () => {
     );
   };
 
-  /*useEffect(() => {
-    // JWTトークンをローカルストレージから取得
+  // Fetch transactions from backend
+  const fetchTransactions = async () => {
     const token = localStorage.getItem("token");
+    const response = await fetch("http://localhost:3001/transactions", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    setTransactions(data);
+  };
 
-    // ユーザー情報を取得する関数
-    const fetchUserInfo = async () => {
-      try {
-        const response = await fetch("http://localhost:3001/userinfo", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setUserInfo(data);
-        } else {
-          throw new Error("User info fetch failed");
-        }
-      } catch (error) {
-        console.error("Error fetching user info:", error);
-        navigate("/login");
-      }
-    };
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
 
-    if (token) {
-      fetchUserInfo();
+  // Add transaction to backend
+  const addTransaction = async (newTransaction) => {
+    const token = localStorage.getItem("token");
+    const response = await fetch("http://localhost:3001/transactions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(newTransaction),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      // Add the transaction with an ID to the local state
+      setTransactions([...transactions, { ...data, id: Date.now() }]);
+      setIsModalOpen(false);
     } else {
-      navigate("/login");
+      console.error("Error adding transaction");
     }
-  }, [navigate]);*/
+  };
+
+  // Delete transaction from backend
+  const deleteTransaction = async (transactionId) => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`http://localhost:3001/transactions/${transactionId}`, {
+      method: "DELETE",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response.ok) {
+      // If the deletion is successful on the backend, update the local state
+      setTransactions(transactions.filter((t) => t.id !== transactionId));
+    } else {
+      console.error("Error deleting transaction");
+    }
+  };
 
   return (
     <FullCalendarStyles>
@@ -215,4 +225,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Calendar;

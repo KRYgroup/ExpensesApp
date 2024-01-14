@@ -8,7 +8,6 @@ import SignupComplete from "./components/SignupComplete";
 import Login from "./components/Login";
 import Loading from "./components/Loading";
 import WelcomePage from "./components/WelcomePage";
-//import Calendar from "./components/Calendar";
 import UserDashboard from "./components/UserDashboard";
 
 const HeaderWrapper = ({ userInfo, onLogout }) => {
@@ -23,7 +22,7 @@ function App() {
   const handleBudgetSubmit = (newBudget) => {
     setBudget(newBudget);
   };
-  //const [transactions, setTransactions] = useState([]); // ここで取引データを管理
+  const [transactions, setTransactions] = useState([]);
   //const incomeData = transactions.filter((t) => t.type === "income");
   //const expenseData = transactions.filter((t) => t.type === "expense");
   const [userInfo, setUserInfo] = useState(null);
@@ -37,6 +36,7 @@ function App() {
     if (token) {
       fetchUserInfo(token);
       fetchUserBudget(token);
+      fetchTransactions(token);
     } else {
       setUserInfo(null);
     }
@@ -70,6 +70,22 @@ function App() {
     }
   };
 
+  const fetchTransactions = async (token) => {
+    try {
+      const response = await fetch("http://localhost:3001/transactions", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setTransactions(data.transactions);
+      } else {
+        console.error("Error fetching transactions:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
+  };
+
   const updateBudget = (newBudget) => {
     setBudget(newBudget);
   };
@@ -91,7 +107,7 @@ function App() {
             <Route path="/signup-complete" element={<SignupComplete />} />
             <Route path="/login" element={<Login onUpdateUser={updateUser} onBudgetUpdate={updateBudget} />} />
             {/* <Route path="/calendar" element={<Calendar transactions={transactions} setTransactions={setTransactions} />} /> */}
-            <Route path="/dashboard" element={<UserDashboard onBudgetSubmit={handleBudgetSubmit} budget={budget} />} />
+            <Route path="/dashboard" element={<UserDashboard onBudgetSubmit={handleBudgetSubmit} budget={budget} transactions={transactions} setTransactions={setTransactions} />} />
           </Routes>
         </div>
         <Footer />
