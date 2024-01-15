@@ -24,6 +24,12 @@ const Form = styled.form`
   max-width: 400px;
   margin-left: auto; // 左側に自動のマージンを設定し、右側に寄せる
   margin-right: 0; // 右側のマージンを0に設定
+
+  // スマートフォンサイズのデバイス向けのメディアクエリ
+  @media (max-width: 600px) {
+    max-width: 250px; // スマートフォンの画面サイズに合わせてフォームの最大幅を小さくする
+    padding: 20px; // スマートフォンの画面サイズに合わせてパディングを調整する
+  }
 `;
 
 const Input = styled.input`
@@ -96,7 +102,7 @@ const Signup = () => {
     <SignupContainer>
       <div>
         <Form onSubmit={handleSubmit}>
-          <h2>Signup</h2>
+          <h2>Sign up</h2>
           <div>
             <label>Name:</label>
             <Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -113,7 +119,7 @@ const Signup = () => {
             <label>Confirm Password:</label>
             <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
           </div>
-          <Button type="submit">Signup</Button>
+          <Button type="submit">Sign up</Button>
           <p>
             Already have an account? <Link to="/login">Log in here</Link> {/* Link to login page */}
           </p>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import backgroundImage1 from "../images/signup.png";
@@ -11,23 +11,42 @@ const CompleteContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: flex-start; // コンテナ内のアイテムを開始端（左）に揃えます
-  padding-left: 70%; // コンテンツを右側に寄せるための左側のパディング
+  align-items: flex-start;
+  padding-left: 70%;
+
+  // スマートフォンや小さなデバイス向けのメディアクエリ
+  @media (max-width: 480px) {
+    padding-right: 50px; 
+  }
 `;
+
 
 const Title = styled.h2`
   color: white;
   margin-bottom: 20px;
-  text-align: left; // テキストは左揃え
+  text-align: left;
   font-size: 30px;
+  width: 80%; // ここで幅を調整してください
+
+  @media (max-width: 480px) {
+    font-size: 15px;
+    width: 140%; // スマートフォンでの幅を調整
+  }
 `;
 
 const Message = styled.p`
   color: white;
   margin-bottom: 30px;
-  text-align: left; // テキストは左揃え
+  text-align: left;
   font-size: 30px;
+  width: 80%; // ここで幅を調整してください
+  
+  @media (max-width: 480px) {
+    font-size: 20px;
+    width: 140%; // スマートフォンでの幅を調整
+  }
 `;
+
 
 const StyledLink = styled(Link)`
   padding: 10px 20px;
@@ -38,17 +57,35 @@ const StyledLink = styled(Link)`
   &:hover {
     background-color: #769f3e;
   }
+  
+  @media (max-width: 480px) {
+    padding-right: 20px;
+    font-size: 20px;
+    max-width: 50px;
+    width: 80%; // スマートフォンでの幅を調整
+  }
 `;
 
 
-
-
 const SignupComplete = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <CompleteContainer>
-      <Title>Thank you for Signing Up!</Title>
-      <Message>Your account has been created. You can now log in to get started.</Message>
-      <StyledLink to="/login">Log in here</StyledLink>
+      <Title>Thank you for signing up!</Title>
+      <Message>
+        {isMobile ? "You can now log in to get started." : "Your account has been created. You can now log in to get started."}
+      </Message>
+      <StyledLink to="/login">Login</StyledLink>
     </CompleteContainer>
   );
 };

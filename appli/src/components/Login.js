@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import backgroundImage1 from "../images/signup.png";
 
@@ -17,14 +17,20 @@ const LoginContainer = styled.div`
 
 const Form = styled.form`
   background-color: rgba(255, 255, 255, 0.95);
-  padding: 20px;
+  padding: 40px;
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
-  margin-left: auto; // 左側に自動のマージンを設定し、右側に寄せる
-  margin-right: 0; // 右側のマージンを0に設定
-`;
+  margin-left: auto;
+  margin-right: auto;
+
+  // スマートフォンサイズのデバイス向けのメディアクエリ
+  @media (max-width: 600px) {
+    max-width: 250px; // スマートフォンの画面サイズに合わせてフォームの最大幅を小さくする
+    padding: 20px; // スマートフォンの画面サイズに合わせてパディングを調整する
+  }
+  `;
 
 const Input = styled.input`
   width: calc(100% - 20px); // paddingを考慮した幅
@@ -125,6 +131,9 @@ const Login = ({ onUpdateUser, onBudgetUpdate }) => {
             <label>Password:</label>
             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
+          <p>
+            Don't have an account? <Link to="/signup">Sign up here</Link> {/* Link to login page */}
+          </p>
           <Button type="submit">Login</Button>
         </Form>
       </div>
