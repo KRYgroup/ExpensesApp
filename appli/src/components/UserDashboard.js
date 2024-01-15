@@ -5,21 +5,32 @@ import Calendar from "./Calendar";
 import ExpenseChart from "./ExpenseChart";
 import IncomeChart from "./IncomeChart";
 import CurrencyExchangeRate from "./CurrencyExchangeRate";
-
 import styled from "styled-components";
 
 const GraphContainer = styled.div`
   display: flex;
-  flex-direction: row; /* 標準では横並び */
-  justify-content: space-around; /* グラフ間のスペース調整 */
-  align-items: center; /* 縦方向の中央揃え */
-  margin-bottom: 150px;
+  flex-direction: column; /* スマートフォンでは縦並び */
+  align-items: center;
+  justify-content: space-around;
+  width: 100%; /* コンテナの幅を親要素に合わせる */
+  margin-bottom: 1em; /* グラフ間のマージン */
 
-  @media screen and (max-width: 767px) { /* iPadやスマートフォン向け */
-    flex-direction: column; 
-    margin-bottom: 100px;
+  @media screen and (min-width: 768px) {
+    /* タブレットサイズで横並びに変更する */
+    flex-direction: row;
+    justify-content: space-around; /* 余白を均等に分布 */
+    margin-bottom: 2em;
+  }
+
+  @media screen and (min-width: 820px) {
+    /* iPad Airの横向きサイズでスタイルを調整する */
+    margin-bottom: 50px; /* より大きなマージン */
   }
 `;
+
+
+
+
 
 const UserDashboard = ({ onBudgetSubmit, budget, transactions, setTransactions }) => {
   return (

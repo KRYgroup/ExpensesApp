@@ -1,8 +1,19 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import { CategoryScale, Chart as ChartJS, BarElement, LinearScale, Title, Tooltip, Legend } from "chart.js";
-
+import styled from "styled-components";
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+const graphContainerStyle = {
+  maxWidth: '600px',
+  maxHeight: '500px',
+  width: '100%',
+  height: 'auto', // スマートフォンでは高さ自動調整
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  marginBottom: '50px', // デフォルトのマージン
+};
 
 const ExpenseChart = ({
   expenses = [
@@ -26,15 +37,15 @@ const ExpenseChart = ({
 
   const options = {
     maintainAspectRatio: false, // アスペクト比を維持しない
-    // 他のオプションは必要に応じてここに追加...
+    aspectRatio: 1,
   };
 
   return (
-    <div style={{ maxWidth: '600px', maxHeight: '500px', width: '100%', height: '100%' }}>
+    <div style={graphContainerStyle}>
       <h2>Expense Chart</h2>
       <Bar data={chartData} options={options} />
     </div>
   );
-};
+}
 
 export default ExpenseChart;
