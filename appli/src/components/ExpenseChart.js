@@ -1,6 +1,7 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import { CategoryScale, Chart as ChartJS, BarElement, LinearScale, Title, Tooltip, Legend } from "chart.js";
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const ExpenseChart = ({
@@ -23,10 +24,15 @@ const ExpenseChart = ({
     ],
   };
 
+  const options = {
+    maintainAspectRatio: false, // アスペクト比を維持しない
+    // 他のオプションは必要に応じてここに追加...
+  };
+
   return (
-    <div>
+    <div style={{ maxWidth: '600px', maxHeight: '500px', width: '100%', height: '100%' }}>
       <h2>Expense Chart</h2>
-      <Bar data={chartData} />
+      <Bar data={chartData} options={options} />
     </div>
   );
 };

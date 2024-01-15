@@ -18,6 +18,10 @@ const IncomeChart = ({
 
   const colors = ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(153, 102, 255, 0.2)"];
 
+  const options = {
+    maintainAspectRatio: false, 
+  };
+
   // グラフのデータ設定
   const chartData = {
     labels: categories,
@@ -33,14 +37,14 @@ const IncomeChart = ({
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: '500px', maxHeight: '500px', width: '100%', height: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <h2>Income Chart</h2>
       <div>
         <button onClick={() => setChartType("pie")}>Pie Chart</button>
         <button onClick={() => setChartType("bar")}>Bar Chart</button>
       </div>
       {chartType === "pie" && <Pie data={chartData} />}
-      {chartType === "bar" && <Bar data={chartData} />}
+      {chartType === "bar" && <Bar data={chartData} options={options} />}
     </div>
   );
 };
