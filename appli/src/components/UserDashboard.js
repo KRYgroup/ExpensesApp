@@ -28,15 +28,48 @@ const GraphContainer = styled.div`
   }
 `;
 
+const aggregateExpensesByCategory = (transactions) => {
+  const expensesByCategory = {};
+  transactions.forEach((transaction) => {
+    if (transaction.type === "expense") {
+      const { category, amount } = transaction;
+      expensesByCategory[category] = (expensesByCategory[category] || 0) + amount;
+    }
+  });
+
+  return Object.keys(expensesByCategory).map((category) => ({
+    category,
+    amount: expensesByCategory[category],
+  }));
+};
+
+const aggregateIncomesByCategory = (transactions) => {
+  const incomesByCategory = {};
+  transactions.forEach((transaction) => {
+    if (transaction.type === "income") {
+      const { category, amount } = transaction;
+      incomesByCategory[category] = (incomesByCategory[category] || 0) + amount;
+    }
+  });
+
+  return Object.keys(incomesByCategory).map((category) => ({
+    category,
+    amount: incomesByCategory[category],
+  }));
+};
+
 const UserDashboard = ({ onBudgetSubmit, budget, transactions, setTransactions }) => {
+  const monthlyExpenses = aggregateExpensesByCategory(transactions);
+  const monthlyIncomes = aggregateIncomesByCategory(transactions);
+
   return (
     <>
       <BudgetForm onFormSubmit={onBudgetSubmit} />
       <BudgetOverview budget={budget} />
       <Calendar transactions={transactions} setTransactions={setTransactions} />
       <GraphContainer>
-        <ExpenseChart />
-        <IncomeChart />
+        <ExpenseChart expenses={monthlyExpenses} />
+        <IncomeChart incomes={monthlyIncomes} />
       </GraphContainer>
       {/* <CurrencyExchangeRate /> */}
     </>

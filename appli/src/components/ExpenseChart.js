@@ -15,13 +15,7 @@ const graphContainerStyle = {
   marginBottom: "50px", // デフォルトのマージン
 };
 
-const ExpenseChart = ({
-  expenses = [
-    { category: "Groceries", amount: 200 },
-    { category: "Utilities", amount: 150 },
-    { category: "Entertainment", amount: 100 },
-  ],
-}) => {
+const ExpenseChart = ({ expenses = [] }) => {
   const chartData = {
     labels: expenses.map((expense) => expense.category),
     datasets: [
