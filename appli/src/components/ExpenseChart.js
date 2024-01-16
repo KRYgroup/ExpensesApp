@@ -1,28 +1,47 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
 import { CategoryScale, Chart as ChartJS, BarElement, LinearScale, Title, Tooltip, Legend } from "chart.js";
-//import styled from "styled-components";
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+
+// カテゴリーごとの色のマッピング
+const categoryColors = {
+  "food 🍔": "#FF6384",
+  "social life 🍺": "#36A2EB",
+  "transport 🚞": "#FFCE56",
+  "pets 🐶": "#EC932F",
+  "household 🏡": "#71B37C",
+  "apparel 👔": "#8E5EA2",
+  "beauty 💄": "#F7464A",
+  "health 💊": "#4D5360",
+  "education 🎓": "#FDB45C",
+  "gift 🎁": "#949FB1",
+  // その他のカテゴリーのデフォルト色
+  "other": "#4D5360"
+};
 
 const graphContainerStyle = {
   maxWidth: "600px",
   maxHeight: "500px",
   width: "100%",
-  height: "auto", // スマートフォンでは高さ自動調整
+  height: "auto",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  marginBottom: "50px", // デフォルトのマージン
+  marginBottom: "50px",
 };
 
 const ExpenseChart = ({ expenses = [] }) => {
+  // 各支出に対応する色を割り当てる
+  const backgroundColors = expenses.map((expense) => categoryColors[expense.category] || categoryColors["other"]);
+
   const chartData = {
     labels: expenses.map((expense) => expense.category),
     datasets: [
       {
         label: "Expenses",
         data: expenses.map((expense) => expense.amount),
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        backgroundColor: backgroundColors,
         borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,
       },
@@ -30,7 +49,7 @@ const ExpenseChart = ({ expenses = [] }) => {
   };
 
   const options = {
-    maintainAspectRatio: false, // アスペクト比を維持しない
+    maintainAspectRatio: false,
     aspectRatio: 1,
   };
 
