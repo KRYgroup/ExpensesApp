@@ -1,3 +1,4 @@
+/*
 import React, { useState, useEffect } from "react";
 import { convertCurrency } from "../utils/api";
 
@@ -30,3 +31,4 @@ const CurrencyExchangeRate = ({ baseCurrency, targetCurrency, amount }) => {
 };
 
 export default CurrencyExchangeRate;
+*/

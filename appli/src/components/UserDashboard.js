@@ -4,7 +4,7 @@ import BudgetOverview from "./BudgetOverview";
 import Calendar from "./Calendar";
 import ExpenseChart from "./ExpenseChart";
 import IncomeChart from "./IncomeChart";
-import CurrencyExchangeRate from "./CurrencyExchangeRate";
+//import CurrencyExchangeRate from "./CurrencyExchangeRate";
 import styled from "styled-components";
 
 const GraphContainer = styled.div`
@@ -28,10 +28,6 @@ const GraphContainer = styled.div`
   }
 `;
 
-
-
-
-
 const UserDashboard = ({ onBudgetSubmit, budget, transactions, setTransactions }) => {
   return (
     <>
@@ -39,10 +35,10 @@ const UserDashboard = ({ onBudgetSubmit, budget, transactions, setTransactions }
       <BudgetOverview budget={budget} />
       <Calendar transactions={transactions} setTransactions={setTransactions} />
       <GraphContainer>
-      <ExpenseChart />
-      <IncomeChart />
+        <ExpenseChart />
+        <IncomeChart />
       </GraphContainer>
-      <CurrencyExchangeRate />
+      {/* <CurrencyExchangeRate /> */}
     </>
   );
 };
