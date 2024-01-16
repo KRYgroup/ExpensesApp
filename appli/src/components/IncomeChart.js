@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Pie, Bar } from "react-chartjs-2";
 import { CategoryScale, Chart as ChartJS, BarElement, LinearScale, Title, Tooltip, Legend, ArcElement } from "chart.js";
-import styled from "styled-components";
+//import styled from "styled-components";
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement);
 
 const graphContainerStyle = {
-  maxWidth: '600px', 
-  maxHeight: '500px', 
-  width: '100%', 
-  height: 'auto', // スマートフォンでは高さ自動調整
-  display: 'flex', 
-  flexDirection: 'column', 
-  alignItems: 'center', 
-  marginBottom: '50px', // デフォルトのマージン
+  maxWidth: "600px",
+  maxHeight: "500px",
+  width: "100%",
+  height: "auto", // スマートフォンでは高さ自動調整
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  marginBottom: "50px", // デフォルトのマージン
 };
 
 const IncomeChart = ({
@@ -31,7 +31,7 @@ const IncomeChart = ({
   const colors = ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(153, 102, 255, 0.2)"];
 
   const options = {
-    maintainAspectRatio: false, 
+    maintainAspectRatio: false,
   };
 
   // グラフのデータ設定

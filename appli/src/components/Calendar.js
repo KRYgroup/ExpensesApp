@@ -92,27 +92,56 @@ const Calendar = () => {
     setTargetCurrency(newTargetCurrency);
   };*/
 
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
+  useEffect(() => {
+    console.log("Transactions state updated:", transactions);
+  }, [transactions]);
+
+  const fetchTransactions = async () => {
+    console.log("Fetching transactions...");
+    const token = localStorage.getItem("token");
+    const response = await fetch("http://localhost:3001/transactions", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    console.log("Received transactions:", data);
+    if (response.ok) {
+      setTransactions(data);
+    } else {
+      console.error("Error fetching transactions");
+    }
+  };
+
   const calculateTotalsByDate = () => {
+    console.log("Transactions for calculation:", transactions);
+    if (!transactions || transactions.length === 0) {
+      return [];
+    }
+
     const totals = transactions.reduce((acc, transaction) => {
       const { date, amount, type } = transaction;
       acc[date] = acc[date] || { expense: 0, income: 0 };
       if (type === "expense") {
         acc[date].expense += amount;
-      } else {
+      } else if (type === "income") {
         acc[date].income += amount;
       }
       return acc;
     }, {});
 
     const events = Object.keys(totals).map((date) => {
-      const event = {
-        title: "",
-        date,
+      return {
+        title: `Exp: ${totals[date].expense}, Inc: ${totals[date].income}`,
+        date: date,
         allDay: true,
         backgroundColor: "transparent",
+        borderColor: "transparent",
+        textColor: "black",
         extendedProps: totals[date],
       };
-      return event;
     });
 
     return events;
@@ -122,25 +151,11 @@ const Calendar = () => {
     const { expense, income } = eventInfo.event.extendedProps;
     return (
       <div>
-        {expense > 0 && <div style={{ color: "#FF5F17" }}>Exp:${expense}</div>}
-        {income > 0 && <div style={{ color: "green" }}>Inc:${income}</div>}
+        {expense > 0 && <div style={{ color: "#FF5F17" }}>Exp: ${expense}</div>}
+        {income > 0 && <div style={{ color: "green" }}>Inc: ${income}</div>}
       </div>
     );
   };
-
-  // Fetch transactions from backend
-  const fetchTransactions = async () => {
-    const token = localStorage.getItem("token");
-    const response = await fetch("http://localhost:3001/transactions", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const data = await response.json();
-    setTransactions(data);
-  };
-
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
 
   // Add transaction to backend
   const addTransaction = async (newTransaction) => {

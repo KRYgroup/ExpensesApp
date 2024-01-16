@@ -75,9 +75,9 @@ function App() {
       const response = await fetch("http://localhost:3001/transactions", {
         headers: { Authorization: `Bearer ${token}` },
       });
+      const data = await response.json();
       if (response.ok) {
-        const data = await response.json();
-        setTransactions(data.transactions);
+        setTransactions(data);
       } else {
         console.error("Error fetching transactions:", response.statusText);
       }
