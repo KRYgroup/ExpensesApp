@@ -15,10 +15,10 @@ const graphContainerStyle = {
   marginBottom: "50px", // デフォルトのマージン
 };
 
-const IncomeChart = ({ incomes }) => {
-  const categories = [...new Set(incomes.map((item) => item.source))];
+const IncomeChart = ({ incomes = [] }) => {
+  const categories = [...new Set(incomes.map((income) => income.category))];
   const data = categories.map((category) => {
-    return incomes.filter((item) => item.source === category).reduce((total, item) => total + item.amount, 0);
+    return incomes.filter((income) => income.category === category).reduce((total, income) => total + income.amount, 0);
   });
 
   const colors = ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(255, 206, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(153, 102, 255, 0.2)"];
