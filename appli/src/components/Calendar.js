@@ -96,18 +96,12 @@ const Calendar = () => {
     fetchTransactions();
   }, []);
 
-  useEffect(() => {
-    console.log("Transactions state updated:", transactions);
-  }, [transactions]);
-
   const fetchTransactions = async () => {
-    console.log("Fetching transactions...");
     const token = localStorage.getItem("token");
     const response = await fetch("http://localhost:3001/transactions", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await response.json();
-    console.log("Received transactions:", data);
     if (response.ok) {
       setTransactions(data);
     } else {
@@ -116,7 +110,6 @@ const Calendar = () => {
   };
 
   const calculateTotalsByDate = () => {
-    console.log("Transactions for calculation:", transactions);
     if (!transactions || transactions.length === 0) {
       return [];
     }
