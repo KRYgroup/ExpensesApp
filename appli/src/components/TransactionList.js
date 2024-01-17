@@ -27,7 +27,8 @@ const TransactionList = ({ transactions, onDelete }) => {
     <ul>
       {transactions.map((transaction) => (
         <TransactionItem key={transaction._id} type={transaction.type}>
-          {formatDate(transaction.date)} - {transaction.category}: {transaction.amount} ({transaction.type})<DeleteButton onClick={() => onDelete(transaction.id)}>Delete</DeleteButton>
+          {formatDate(transaction.date)} - {transaction.category}: {transaction.amount} ({transaction.type})
+          <DeleteButton onClick={() => onDelete(transaction._id)}>Delete</DeleteButton>
         </TransactionItem>
       ))}
     </ul>
