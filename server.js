@@ -212,7 +212,7 @@ app.delete("/transactions/:transactionId", async (req, res) => {
       return res.status(404).json({ message: "User not found." });
     }
 
-    user.transactions = user.transactions.filter((t) => t._id != req.params.transactionId);
+    user.transactions = user.transactions.filter((t) => t._id.toString() != req.params.transactionId);
     await user.save();
     res.status(200).json({ message: "Transaction deleted" });
   } catch (error) {

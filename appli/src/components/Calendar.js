@@ -174,6 +174,8 @@ const Calendar = () => {
 
   // Delete transaction from backend
   const deleteTransaction = async (transactionId) => {
+    console.log("Deleting transaction with ID:", transactionId);
+
     const token = localStorage.getItem("token");
     const response = await fetch(`http://localhost:3001/transactions/${transactionId}`, {
       method: "DELETE",
@@ -182,7 +184,7 @@ const Calendar = () => {
 
     if (response.ok) {
       // If the deletion is successful on the backend, update the local state
-      setTransactions(transactions.filter((t) => t.id !== transactionId));
+      setTransactions(transactions.filter((t) => t._id !== transactionId));
     } else {
       console.error("Error deleting transaction");
     }
