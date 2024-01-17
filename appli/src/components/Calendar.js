@@ -176,8 +176,6 @@ const Calendar = () => {
 
   // Delete transaction from backend
   const deleteTransaction = async (transactionId) => {
-    console.log("Deleting transaction with ID:", transactionId);
-
     const token = localStorage.getItem("token");
     const response = await fetch(`http://localhost:3001/transactions/${transactionId}`, {
       method: "DELETE",
