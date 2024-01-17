@@ -53,6 +53,7 @@ function TransactionForm({ addTransaction, date }) {
   const [newCategory, setNewCategory] = useState("");
   const [type, setType] = useState("expense");
   const [categories, setCategories] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const expenseCategories = ["food 🍔", "social life 🍺", "transport 🚞", "pets 🐶", "household 🏡", "apparel 👔", "beauty 💄", "health 💊", "education 🎓", "gift 🎁"];
@@ -71,16 +72,24 @@ function TransactionForm({ addTransaction, date }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!amount) {
+      setErrorMessage("Please enter an amount."); // amountが空の場合、エラーメッセージを設定
+      return;
+    }
+    // エラーがない場合は通常の処理を続行
     const categoryValue = category === "other" ? newCategory : category;
     addTransaction({ date, category: categoryValue, amount: parseFloat(amount), type });
     setAmount("");
     setCategory("");
     setNewCategory("");
     setType("expense");
+    setErrorMessage(""); // エラーメッセージをクリア
   };
 
   return (
     <Form onSubmit={handleSubmit}>
+        {/* エラーメッセージを表示 */}
+      {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
       <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount" />
       <select value={type} onChange={(e) => setType(e.target.value)}>
         <option value="expense">Expense</option>
