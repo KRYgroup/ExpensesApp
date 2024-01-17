@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import CurrencyExchangeRate from "./CurrencyExchangeRate";
 
 const TransactionItem = styled.li`
   background-color: white;
@@ -17,7 +18,7 @@ const DeleteButton = styled.button`
   font-weight: bold;
 `;
 
-const TransactionList = ({ transactions, onDelete }) => {
+const TransactionList = ({ transactions, onDelete, baseCurrency, targetCurrency, showConverted }) => {
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "2-digit", day: "2-digit" };
     return new Date(dateString).toLocaleDateString("en-GB", options);
@@ -27,7 +28,10 @@ const TransactionList = ({ transactions, onDelete }) => {
     <ul>
       {transactions.map((transaction) => (
         <TransactionItem key={transaction._id} type={transaction.type}>
-          {formatDate(transaction.date)} - {transaction.category}: {transaction.amount} ({transaction.type})<DeleteButton onClick={() => onDelete(transaction._id)}>Delete</DeleteButton>
+          <div>
+            {formatDate(transaction.date)} - {transaction.category}:{showConverted ? <CurrencyExchangeRate baseCurrency={baseCurrency} targetCurrency={targetCurrency} amount={transaction.amount} /> : `${transaction.amount} ${baseCurrency}`}({transaction.type})
+          </div>
+          <DeleteButton onClick={() => onDelete(transaction._id)}>Delete</DeleteButton>
         </TransactionItem>
       ))}
     </ul>

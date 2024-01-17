@@ -58,15 +58,23 @@ const aggregateIncomesByCategory = (transactions) => {
   }));
 };
 
-const UserDashboard = ({ onBudgetSubmit, budget, transactions, setTransactions }) => {
+const UserDashboard = ({ onBudgetSubmit, budget, baseCurrency, targetCurrency, showConverted, transactions, setTransactions }) => {
   const monthlyExpenses = aggregateExpensesByCategory(transactions);
   const monthlyIncomes = aggregateIncomesByCategory(transactions);
 
+  const addTransaction = (newTransaction) => {
+    setTransactions([...transactions, newTransaction]);
+  };
+
+  const deleteTransaction = (transactionId) => {
+    setTransactions(transactions.filter((t) => t._id !== transactionId));
+  };
+
   return (
     <>
-      <BudgetForm onFormSubmit={onBudgetSubmit} />
-      <BudgetOverview budget={budget} />
-      <Calendar transactions={transactions} setTransactions={setTransactions} />
+      <BudgetForm onFormSubmit={onBudgetSubmit} addTransaction={addTransaction} />
+      <BudgetOverview budget={budget} baseCurrency={baseCurrency} targetCurrency={targetCurrency} showConverted={showConverted} />
+      <Calendar transactions={transactions} setTransactions={setTransactions} deleteTransaction={deleteTransaction} baseCurrency={baseCurrency} targetCurrency={targetCurrency} showConverted={showConverted} />
       <GraphContainer>
         <ExpenseChart expenses={monthlyExpenses} />
         <IncomeChart incomes={monthlyIncomes} />

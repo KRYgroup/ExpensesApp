@@ -1,8 +1,7 @@
-/*
 import React, { useState, useEffect } from "react";
 import { convertCurrency } from "../utils/api";
 
-const CurrencyExchangeRate = ({ baseCurrency, targetCurrency, amount }) => {
+const CurrencyExchangeRate = ({ baseCurrency, targetCurrency, amount, label }) => {
   const [convertedAmount, setConvertedAmount] = useState(null);
 
   useEffect(() => {
@@ -10,7 +9,7 @@ const CurrencyExchangeRate = ({ baseCurrency, targetCurrency, amount }) => {
       const result = await convertCurrency(baseCurrency, targetCurrency, amount);
       if (result && result.result) {
         const roundedAmount = Math.floor(result.result);
-        setConvertedAmount(roundedAmount); // 変換後の金額をセット
+        setConvertedAmount(roundedAmount);
       }
     };
 
@@ -23,7 +22,7 @@ const CurrencyExchangeRate = ({ baseCurrency, targetCurrency, amount }) => {
     <div>
       {convertedAmount && (
         <p>
-          {amount} {baseCurrency} is approximately {convertedAmount} {targetCurrency}
+          {label}: {amount} {baseCurrency} ≈ {convertedAmount} {targetCurrency}
         </p>
       )}
     </div>
@@ -31,4 +30,3 @@ const CurrencyExchangeRate = ({ baseCurrency, targetCurrency, amount }) => {
 };
 
 export default CurrencyExchangeRate;
-*/

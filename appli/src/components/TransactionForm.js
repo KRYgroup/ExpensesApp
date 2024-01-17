@@ -76,6 +76,7 @@ function TransactionForm({ addTransaction, date }) {
       setErrorMessage("Please enter an amount."); // amountが空の場合、エラーメッセージを設定
       return;
     }
+
     // エラーがない場合は通常の処理を続行
     const categoryValue = category === "other" ? newCategory : category;
     addTransaction({ date, category: categoryValue, amount: parseFloat(amount), type });
@@ -88,8 +89,8 @@ function TransactionForm({ addTransaction, date }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-        {/* エラーメッセージを表示 */}
-      {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+      {/* エラーメッセージを表示 */}
+      {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
       <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount" />
       <select value={type} onChange={(e) => setType(e.target.value)}>
         <option value="expense">Expense</option>

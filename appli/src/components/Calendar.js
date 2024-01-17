@@ -4,7 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import TransactionForm from "./TransactionForm";
 import TransactionList from "./TransactionList";
-//import CurrencyExchangeRate from "./CurrencyExchangeRate";
+import CurrencyExchangeRate from "./CurrencyExchangeRate";
 import styled from "styled-components";
 import backgroundImage1 from "../images/wood2.png";
 import backgroundImage2 from "../images/wood3.png";
@@ -71,6 +71,7 @@ const Calendar = () => {
   const [transactions, setTransactions] = useState([]);
   const [baseCurrency, setBaseCurrency] = useState("AUD"); // 基本通貨
   const [targetCurrency, setTargetCurrency] = useState("JPY"); // 目標通過
+  const [showConverted, setShowConverted] = useState(false);
 
   const formatDate = (dateString) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
@@ -142,10 +143,11 @@ const Calendar = () => {
 
   const renderEventContent = (eventInfo) => {
     const { expense, income } = eventInfo.event.extendedProps;
+
     return (
       <div>
-        {expense > 0 && <div style={{ color: "#FF5F17" }}>Exp: ${expense}</div>}
-        {income > 0 && <div style={{ color: "green" }}>Inc: ${income}</div>}
+        {expense > 0 && <div style={{ color: "#FF5F17" }}>{showConverted ? <CurrencyExchangeRate baseCurrency={baseCurrency} targetCurrency={targetCurrency} amount={expense} /> : `Exp: ${expense} ${baseCurrency}`}</div>}
+        {income > 0 && <div style={{ color: "green" }}>{showConverted ? <CurrencyExchangeRate baseCurrency={baseCurrency} targetCurrency={targetCurrency} amount={income} /> : `Inc: ${income} ${baseCurrency}`}</div>}
       </div>
     );
   };
@@ -204,6 +206,7 @@ const Calendar = () => {
           <option value="USD">USD</option>
           {/* ...他の通貨オプション */}
         </select>
+        <button onClick={() => setShowConverted(!showConverted)}>{showConverted ? "Show in Base Currency" : "Convert Currency"}</button>
 
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
@@ -216,13 +219,6 @@ const Calendar = () => {
           }}
         />
 
-        {/*
-        <CurrencyExchangeRate
-          baseCurrency={baseCurrency}
-          targetCurrency={targetCurrency}
-          amount={100} // 例として100を使用
-        />
-        */}
         {isModalOpen && (
           <Modal>
             <ModalContent>
@@ -231,7 +227,7 @@ const Calendar = () => {
               <TransactionSection>
                 {/* ここで formatDate を使用して selectedDate をフォーマットします */}
                 <h3>Transactions for {formatDate(selectedDate)}</h3>
-                <TransactionList transactions={transactions.filter((t) => formatDate(t.date) === formatDate(selectedDate))} onDelete={deleteTransaction} />
+                <TransactionList transactions={transactions.filter((t) => formatDate(t.date) === formatDate(selectedDate))} onDelete={deleteTransaction} baseCurrency={baseCurrency} targetCurrency={targetCurrency} showConverted={showConverted} />
               </TransactionSection>
             </ModalContent>
           </Modal>

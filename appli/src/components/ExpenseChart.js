@@ -17,7 +17,7 @@ const categoryColors = {
   "education 🎓": "#FDB45C",
   "gift 🎁": "#949FB1",
   // その他のカテゴリーのデフォルト色
-  "other": "#4D5360"
+  other: "#4D5360",
 };
 
 const graphContainerStyle = {
