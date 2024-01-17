@@ -56,7 +56,7 @@ function TransactionForm({ addTransaction, date }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    const expenseCategories = ["food 🍔", "social life 🍺", "transport 🚞", "pets 🐶", "household 🏡", "apparel 👔", "beauty 💄", "health 💊", "education 🎓", "gift 🎁"];
+    const expenseCategories = ["groceries 🍔", "social life 🍺", "transport 🚞", "pets 🐶", "household 🏡", "apparel 👔", "beauty 💄", "health 💊", "education 🎓", "gift 🎁"];
 
     const incomeCategories = ["salary", "invest", "interest", "split bill"];
 
