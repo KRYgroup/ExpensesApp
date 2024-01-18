@@ -1,9 +1,10 @@
 // Header.js
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "../images/pig1.png";
+import chartImage from "../images/Indian.png";
 
 const HeaderContainer = styled.header`
   background-image: url(${backgroundImage});
@@ -21,7 +22,23 @@ const Nav = styled.nav`
   margin-top: 10px;
 `;
 
-const StyledLink = styled(Link)`
+const ChartImage = styled.img`
+  max-width: 100%;
+`;
+
+const StyledButton = styled.button`
+  color: white;
+  margin: 0 10px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 30px;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+/*const StyledLink = styled(Link)`
   color: white;
   margin: 0 10px;
   text-decoration: none;
@@ -30,21 +47,27 @@ const StyledLink = styled(Link)`
     text-decoration: underline;
   }
 `;
+*/
 
 const Logout = styled.button`
-  background-color: #BBBBBB;
+  background-color: #bbbbbb;
   color: black;
   font-weight: bold;
   border: 1px, solid, black;
   cursor: pointer;
   border-radius: 5px;
-  padding: ${({ size }) => size ? `${size / 3}px ${size}px` : '10px 20px'};
-  font-size: ${({ fontSize }) => fontSize || '16px'};
+  padding: ${({ size }) => (size ? `${size / 3}px ${size}px` : "10px 20px")};
+  font-size: ${({ fontSize }) => fontSize || "16px"};
   margin-left: 10px;
 `;
 
 const Header = ({ userInfo }) => {
   const navigate = useNavigate();
+  const [showChart, setShowChart] = useState(false);
+
+  const handleChartButtonClick = () => {
+    setShowChart(true);
+  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -55,10 +78,11 @@ const Header = ({ userInfo }) => {
     <HeaderContainer>
       <h1>ExpensesApp</h1>
       <Nav>
-        <StyledLink to="/">Charts</StyledLink>
+        <StyledButton onClick={handleChartButtonClick}>Charts</StyledButton>
         {userInfo && <p>Welcome, {userInfo.name}!</p>}
         <Logout onClick={handleLogout}>Logout</Logout>
       </Nav>
+      {showChart && <ChartImage src={chartImage} alt="Chart" />}
     </HeaderContainer>
   );
 };
