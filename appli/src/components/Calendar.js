@@ -65,6 +65,51 @@ const TransactionSection = styled.div`
   margin-top: 20px;
 `;
 
+const CurrencyControls = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px; // Adds space between child elements
+
+  select, button {
+    padding: 10px;
+    border: 2px solid #ccc; // Light grey border
+    border-radius: 5px; // Rounded corners
+    background-color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #f4f4f4; // Light grey background on hover
+      border-color: #888; // Darken border on hover
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #555; // Darker border for focus
+    }
+  }
+
+  button {
+    background-color: #4CAF50; // Green background for the button
+    color: white;
+    border: none;
+    box-shadow: 0 2px #999; // Adds depth by shadow on the bottom
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: #45a049; // Slightly darker green on hover
+    }
+
+    &:active {
+      box-shadow: 0 2px #666; // Shifts and darkens the shadow to give a pressed effect
+      transform: translateY(2px); // Simulates the button being pressed down
+    }
+  }
+`;
+
 const Calendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
@@ -193,6 +238,7 @@ const Calendar = () => {
   return (
     <FullCalendarStyles>
       <div>
+      <CurrencyControls>
         <select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
           {/* 通貨のオプションを追加 */}
           <option value="AUD">AUD</option>
@@ -205,7 +251,7 @@ const Calendar = () => {
           {/* ...他の通貨オプション */}
         </select>
         <button onClick={() => setShowConverted(!showConverted)}>{showConverted ? "Show in Base Currency" : "Convert Currency"}</button>
-
+        </CurrencyControls>
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
