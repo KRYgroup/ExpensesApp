@@ -1,11 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import CurrencyExchangeRate from "./CurrencyExchangeRate";
 
-function BudgetOverview({ budget, baseCurrency, targetCurrency, showConverted }) {
+function BudgetOverview({ budget }) {
   return (
     <div>
-      <BudgetParagraph>Your current budget is: {showConverted ? <CurrencyExchangeRate baseCurrency={baseCurrency} targetCurrency={targetCurrency} amount={budget} label="" /> : `${budget} ${baseCurrency}`}</BudgetParagraph>
+      <BudgetParagraph>Your current budget is: ${budget}</BudgetParagraph>
     </div>
   );
 }
