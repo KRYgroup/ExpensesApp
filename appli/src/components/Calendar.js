@@ -5,6 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import TransactionForm from "./TransactionForm";
 import TransactionList from "./TransactionList";
 import CurrencyExchangeRate from "./CurrencyExchangeRate";
+import TotalMoney from './TotalMoney';
 import styled from "styled-components";
 import backgroundImage1 from "../images/wood2.png";
 import backgroundImage2 from "../images/wood3.png";
@@ -69,7 +70,7 @@ const CurrencyControls = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   gap: 10px; // Adds space between child elements
 
   select, button {
@@ -117,6 +118,7 @@ const Calendar = () => {
   const [baseCurrency, setBaseCurrency] = useState("AUD"); // 基本通貨
   const [targetCurrency, setTargetCurrency] = useState("JPY"); // 目標通過
   const [showConverted, setShowConverted] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
 
   const formatDate = (dateString) => {
     const options = { day: "2-digit", month: "2-digit", year: "numeric" };
@@ -197,8 +199,8 @@ const Calendar = () => {
     );
   };
 
-  // Add transaction to backend
   const addTransaction = async (newTransaction) => {
+    console.log('Adding transaction:', newTransaction);
     const token = localStorage.getItem("token");
     const response = await fetch("http://localhost:3001/transactions", {
       method: "POST",
@@ -208,35 +210,41 @@ const Calendar = () => {
       },
       body: JSON.stringify(newTransaction),
     });
-
+  
     if (response.ok) {
       const data = await response.json();
-      // Add the transaction with an ID to the local state
+      console.log('Transaction added:', data);
       setTransactions([...transactions, { ...data, id: Date.now() }]);
       setIsModalOpen(false);
     } else {
       console.error("Error adding transaction");
     }
   };
-
+  
   // Delete transaction from backend
   const deleteTransaction = async (transactionId) => {
+    console.log('Deleting transaction with id:', transactionId);
     const token = localStorage.getItem("token");
     const response = await fetch(`http://localhost:3001/transactions/${transactionId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
-
+  
     if (response.ok) {
-      // If the deletion is successful on the backend, update the local state
+      console.log('Transaction deleted with id:', transactionId);
       setTransactions(transactions.filter((t) => t._id !== transactionId));
     } else {
       console.error("Error deleting transaction");
     }
   };
 
+  const handleMonthChange = (info) => {
+    setCurrentMonth(info.start.getMonth());
+  };  
+
   return (
     <FullCalendarStyles>
+      <TotalMoney transactions={transactions} selectedMonth={currentMonth} />
       <div>
       <CurrencyControls>
         <select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
@@ -256,6 +264,7 @@ const Calendar = () => {
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           dateClick={handleDateClick}
+          datesSet={handleMonthChange}
           events={calculateTotalsByDate()}
           eventContent={renderEventContent}
           buttonText={{

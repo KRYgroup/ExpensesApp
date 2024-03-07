@@ -17,7 +17,7 @@ const BudgetParagraph = styled.p`
   color: #6b4e37; // 暗めの木の色
   background: url("path-to-wood-texture.jpg") repeat;
   padding: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   border: 4px solid #917856; // 木の色をした境界線
   border-radius: 5px;
   font-size: 25px;
