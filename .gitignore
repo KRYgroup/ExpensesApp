@@ -5,7 +5,7 @@
 /build
 
 # local environment
-#.env
+.env
 
 # editor config
 /.vscode
