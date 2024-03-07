@@ -21,4 +21,5 @@ const BudgetParagraph = styled.p`
   border-radius: 5px;
   font-size: 25px;
   text-shadow: 1px 1px 2px #917856; // テキストに影をつけて読みやすく
+  text-align: center;
 `;

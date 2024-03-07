@@ -9,7 +9,6 @@ import TotalMoney from './TotalMoney';
 import styled from "styled-components";
 import backgroundImage1 from "../images/wood2.png";
 import backgroundImage2 from "../images/wood3.png";
-import ExpenseChart from './ExpenseChart'; 
 
 const FullCalendarStyles = styled.div`
   .fc-today-button {
@@ -287,7 +286,6 @@ const Calendar = () => {
           </Modal>
         )}
       </div>
-      <ExpenseChart expenses={transactions} />
     </FullCalendarStyles>
   );
 };

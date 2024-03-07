@@ -9,6 +9,7 @@ const TotalContainer = styled.div`
   margin-bottom: 20px; // 上の余白
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); // シャドウ効果
   font-family: 'Times New Roman', Times, serif; // Times New Roman フォント
+  text-align: center;
 `;
 
 const TotalHeader = styled.h2`
