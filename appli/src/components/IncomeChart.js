@@ -36,6 +36,16 @@ const IncomeChart = ({ incomes = [] }) => {
     ],
   };
 
+  // データがない場合の処理を追加
+  if (incomes.length === 0) {
+    return (
+      <div style={graphContainerStyle}>
+        <h2>Income Chart</h2>
+        <p>No data available</p> {/* ここにメッセージを表示 */}
+      </div>
+    );
+  }
+
   return (
     <div style={graphContainerStyle}>
       <h2>Income Chart</h2>
