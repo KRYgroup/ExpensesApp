@@ -30,7 +30,7 @@ const Form = styled.form`
     max-width: 250px; // スマートフォンの画面サイズに合わせてフォームの最大幅を小さくする
     padding: 20px; // スマートフォンの画面サイズに合わせてパディングを調整する
   }
-  `;
+`;
 
 const Input = styled.input`
   width: calc(100% - 20px); // paddingを考慮した幅
@@ -131,6 +131,9 @@ const Login = ({ onUpdateUser, onBudgetUpdate }) => {
             <label>Password:</label>
             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
+          <p>
+            Forgot your password? <Link to="/change-password">Change password here</Link>
+          </p>
           <p>
             Don't have an account? <Link to="/signup">Sign up here</Link> {/* Link to login page */}
           </p>

@@ -8,11 +8,12 @@ import Login from "./components/Login";
 import Loading from "./components/Loading";
 import WelcomePage from "./components/WelcomePage";
 import UserDashboard from "./components/UserDashboard";
+import ChangePassword from "./components/changePassword";
 
 const HeaderWrapper = ({ userInfo, onLogout }) => {
   const location = useLocation();
 
-  return !["/signup", "/login", "/signup-complete", "/"].includes(location.pathname) ? <Header userInfo={userInfo} onLogout={onLogout} /> : null;
+  return !["/signup", "/login", "/signup-complete", "/", "/change-password"].includes(location.pathname) ? <Header userInfo={userInfo} onLogout={onLogout} /> : null;
 };
 
 function App() {
@@ -105,6 +106,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/signup-complete" element={<SignupComplete />} />
             <Route path="/login" element={<Login onUpdateUser={updateUser} onBudgetUpdate={updateBudget} />} />
+            <Route path="/change-password" element={<ChangePassword />} />
             {/* <Route path="/calendar" element={<Calendar transactions={transactions} setTransactions={setTransactions} />} /> */}
             <Route path="/dashboard" element={<UserDashboard onBudgetSubmit={handleBudgetSubmit} budget={budget} transactions={transactions} setTransactions={setTransactions} />} />
           </Routes>

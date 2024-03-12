@@ -44,6 +44,22 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.post("/change-password", async (req, res) => {
+  const { email, newPassword } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found." });
+    }
+    user.password = newPassword;
+    await user.save();
+    res.json({ message: "Password updated successfully." });
+  } catch (error) {
+    console.error("Error updating password:", error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
+
 //Login
 const JWT_SECRET = process.env.JWT_SECRET;
 app.post("/login", async (req, res) => {
