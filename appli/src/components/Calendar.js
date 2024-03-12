@@ -239,8 +239,9 @@ const Calendar = () => {
   };
 
   const handleMonthChange = (info) => {
-    setCurrentMonth(info.start.getMonth());
-  };  
+    const newDisplayMonth = info.start.getMonth() + 1; 
+    setCurrentMonth(newDisplayMonth);
+  };
 
   return (
     <FullCalendarStyles>
