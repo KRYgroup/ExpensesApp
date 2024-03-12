@@ -124,18 +124,28 @@ const Login = ({ onUpdateUser, onBudgetUpdate }) => {
         <Form onSubmit={handleSubmit}>
           <h2>Login</h2>
           <div>
-            <label>Email:</label>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Input 
+              type="email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              placeholder="Email" // この行を追加
+              required // 必須フィールドであることを指定
+            />
           </div>
           <div>
-            <label>Password:</label>
-            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <Input 
+              type="password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              placeholder="Password" // この行を追加
+              required // 必須フィールドであることを指定
+            />
           </div>
           <p>
             Forgot your password? <Link to="/change-password">Change password here</Link>
           </p>
           <p>
-            Don't have an account? <Link to="/signup">Sign up here</Link> {/* Link to login page */}
+            Don't have an account? <Link to="/signup">Sign up here</Link>
           </p>
           <Button type="submit">Login</Button>
         </Form>
@@ -145,3 +155,4 @@ const Login = ({ onUpdateUser, onBudgetUpdate }) => {
 };
 
 export default Login;
+

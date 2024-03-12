@@ -12,7 +12,7 @@ const Container = styled.div`
   display: flex;
   align-items: center; // 水平方向の位置を中央に
   justify-content: flex-end; // 垂直方向の位置を右端に
-  padding-right: 12%; // 右端から25%の位置に設定
+  padding-right: 5%; 
 `;
 
 const Form = styled.form`
@@ -23,7 +23,7 @@ const Form = styled.form`
   width: 100%;
   max-width: 400px;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: 0%; 
 
   // スマートフォンサイズのデバイス向けのメディアクエリ
   @media (max-width: 600px) {

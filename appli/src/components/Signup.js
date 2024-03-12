@@ -104,20 +104,40 @@ const Signup = () => {
         <Form onSubmit={handleSubmit}>
           <h2>Sign up</h2>
           <div>
-            <label>Name:</label>
-            <Input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            <Input 
+            type="text" 
+            value={name} 
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name" 
+              required 
+            />
           </div>
           <div>
-            <label>Email:</label>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Input 
+            type="email" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            placeholder="Email" 
+            required 
+            />
           </div>
           <div>
-            <label>Password:</label>
-            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <Input 
+            type="password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            placeholder="Password" 
+            required 
+            />
           </div>
           <div>
-            <label>Confirm Password:</label>
-            <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+            <Input 
+            type="password" 
+            value={confirmPassword} 
+            onChange={(e) => setConfirmPassword(e.target.value)} 
+            placeholder="Confirm Password" 
+            required 
+            />
           </div>
           <Button type="submit">Sign up</Button>
           <p>
