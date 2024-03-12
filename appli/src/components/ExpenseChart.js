@@ -53,6 +53,16 @@ const ExpenseChart = ({ expenses = [] }) => {
     aspectRatio: 1,
   };
 
+  // データがない場合の処理を追加
+  if (expenses.length === 0) {
+    return (
+      <div style={graphContainerStyle}>
+        <h2>Expense Chart</h2>
+        <p>No data available</p> {/* データがない場合に表示 */}
+      </div>
+    );
+  }
+
   return (
     <div style={graphContainerStyle}>
       <h2>Expense Chart</h2>
