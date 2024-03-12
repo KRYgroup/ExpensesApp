@@ -52,6 +52,7 @@ const StyledParagraph = styled.p`
 color: #EEEEEE; // 明るいグレーで自然な色合い
 font-size: 30px;
 margin-bottom: 10px; // 適切な間隔
+text-align: center; // この行を追加
 
 @media (max-width: 768px) {
 font-size: 20px; // モバイルサイズでフォントサイズを小さくする
@@ -74,6 +75,8 @@ text-decoration: none; // アンダーラインなし
 color: #66FF66; // ホバー時の色
 text-decoration: underline; // ホバー時にアンダーラインを表示
 }
+
+
 
 @media (max-width: 768px) {
 font-size: 20px; // モバイルサイズでフォントサイズを調整
