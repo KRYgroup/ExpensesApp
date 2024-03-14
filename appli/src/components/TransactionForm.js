@@ -70,6 +70,13 @@ function TransactionForm({ addTransaction, date }) {
     setNewCategory("");
   }, [type]);
 
+  const handleAmountChange = (e) => {
+    const value = e.target.value;
+    if (parseFloat(value) >= 0 || value === "") {
+      setAmount(value);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!amount) {
@@ -77,21 +84,20 @@ function TransactionForm({ addTransaction, date }) {
       return;
     }
 
-    // エラーがない場合は通常の処理を続行
     const categoryValue = category === "other" ? newCategory : category;
     addTransaction({ date, category: categoryValue, amount: parseFloat(amount), type });
     setAmount("");
     setCategory("");
     setNewCategory("");
     setType("expense");
-    setErrorMessage(""); // エラーメッセージをクリア
+    setErrorMessage("");
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       {/* エラーメッセージを表示 */}
       {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
-      <input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="Amount" />
+      <input type="number" value={amount} onChange={handleAmountChange} placeholder="Amount" />
       <select value={type} onChange={(e) => setType(e.target.value)}>
         <option value="expense">Expense</option>
         <option value="income">Income</option>
