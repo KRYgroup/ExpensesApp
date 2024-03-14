@@ -5,9 +5,26 @@ import backgroundImage2 from "../images/wood2.png";
 
 function BudgetForm({ onFormSubmit }) {
   const [budget, setBudget] = useState("");
+  const [error, setError] = useState(""); // エラーメッセージのステートを追加
+
+  const handleBudgetChange = (e) => {
+    const value = e.target.value;
+    if (value < 0) {
+      // 入力値がマイナスの場合、エラーをセットします
+      setError("Budget cannot be negative");
+    } else {
+      // 正の値が入力された場合、エラーをクリアします
+      setError("");
+      setBudget(value);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (error) {
+      // エラーがある場合、フォームの送信を阻止します
+      return;
+    }
 
     try {
       const token = localStorage.getItem("token");
@@ -37,11 +54,31 @@ function BudgetForm({ onFormSubmit }) {
   return (
     <StyledBudgetForm onSubmit={handleSubmit}>
       <label htmlFor="budget">Set Your Budget:</label>
-      <input type="number" id="budget" name="budget" value={budget} onChange={(e) => setBudget(e.target.value)} required />
+      <input type="number" id="budget" name="budget" value={budget} onChange={handleBudgetChange} required />
       <button type="submit">Submit</button>
+      <StyledErrorMessage style={{ visibility: error ? 'visible' : 'hidden' }}>{error}</StyledErrorMessage>
     </StyledBudgetForm>
   );
 }
+
+const StyledErrorMessage = styled.div`
+  color: red;
+  margin-top: 5px;
+  margin-bottom: 10px; // Ensure there's a margin below the error message
+  margin-left: 300px;
+  font-size: 14px;
+  text-align: left;
+  height: 20px; // Set a fixed height for the error container
+  visibility: hidden; // By default, the error message is not visible
+  
+  // メディアクエリを追加
+  @media (max-width: 768px) {
+    margin-left: 0; // 画面幅が768px以下の場合、左マージンを取り除く
+    text-align: left; // エラーメッセージのテキストを左寄せにする
+  }
+`;
+
+
 
 export default BudgetForm;
 
