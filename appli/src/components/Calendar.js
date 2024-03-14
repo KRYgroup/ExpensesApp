@@ -5,7 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import TransactionForm from "./TransactionForm";
 import TransactionList from "./TransactionList";
 import CurrencyExchangeRate from "./CurrencyExchangeRate";
-import TotalMoney from './TotalMoney';
+import TotalMoney from "./TotalMoney";
 import styled from "styled-components";
 import backgroundImage1 from "../images/wood2.png";
 import backgroundImage2 from "../images/wood3.png";
@@ -73,7 +73,8 @@ const CurrencyControls = styled.div`
   margin-bottom: 10px;
   gap: 10px; // Adds space between child elements
 
-  select, button {
+  select,
+  button {
     padding: 10px;
     border: 2px solid #ccc; // Light grey border
     border-radius: 5px; // Rounded corners
@@ -94,7 +95,7 @@ const CurrencyControls = styled.div`
   }
 
   button {
-    background-color: #4CAF50; // Green background for the button
+    background-color: #4caf50; // Green background for the button
     color: white;
     border: none;
     box-shadow: 0 2px #999; // Adds depth by shadow on the bottom
@@ -200,7 +201,7 @@ const Calendar = () => {
   };
 
   const addTransaction = async (newTransaction) => {
-    console.log('Adding transaction:', newTransaction);
+    console.log("Adding transaction:", newTransaction);
     const token = localStorage.getItem("token");
     const response = await fetch("http://localhost:3001/transactions", {
       method: "POST",
@@ -210,28 +211,28 @@ const Calendar = () => {
       },
       body: JSON.stringify(newTransaction),
     });
-  
+
     if (response.ok) {
       const data = await response.json();
-      console.log('Transaction added:', data);
+      console.log("Transaction added:", data);
       setTransactions([...transactions, { ...data, id: Date.now() }]);
       setIsModalOpen(false);
     } else {
       console.error("Error adding transaction");
     }
   };
-  
+
   // Delete transaction from backend
   const deleteTransaction = async (transactionId) => {
-    console.log('Deleting transaction with id:', transactionId);
+    console.log("Deleting transaction with id:", transactionId);
     const token = localStorage.getItem("token");
     const response = await fetch(`http://localhost:3001/transactions/${transactionId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
-  
+
     if (response.ok) {
-      console.log('Transaction deleted with id:', transactionId);
+      console.log("Transaction deleted with id:", transactionId);
       setTransactions(transactions.filter((t) => t._id !== transactionId));
     } else {
       console.error("Error deleting transaction");
@@ -239,7 +240,7 @@ const Calendar = () => {
   };
 
   const handleMonthChange = (info) => {
-    const newDisplayMonth = info.start.getMonth() + 1; 
+    const newDisplayMonth = info.start.getMonth() + 1;
     setCurrentMonth(newDisplayMonth);
   };
 
@@ -247,19 +248,19 @@ const Calendar = () => {
     <FullCalendarStyles>
       <TotalMoney transactions={transactions} selectedMonth={currentMonth} />
       <div>
-      <CurrencyControls>
-        <select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
-          {/* 通貨のオプションを追加 */}
-          <option value="AUD">AUD</option>
-          {/* ...他の通貨オプション */}
-        </select>
-        <select value={targetCurrency} onChange={(e) => setTargetCurrency(e.target.value)}>
-          {/* 通貨のオプションを追加 */}
-          <option value="JPY">JPY</option>
-          <option value="USD">USD</option>
-          {/* ...他の通貨オプション */}
-        </select>
-        <button onClick={() => setShowConverted(!showConverted)}>{showConverted ? "Show in Base Currency" : "Convert Currency"}</button>
+        <CurrencyControls>
+          <select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
+            {/* 通貨のオプションを追加 */}
+            <option value="AUD">AUD</option>
+            {/* ...他の通貨オプション */}
+          </select>
+          <select value={targetCurrency} onChange={(e) => setTargetCurrency(e.target.value)}>
+            {/* 通貨のオプションを追加 */}
+            <option value="JPY">JPY</option>
+            <option value="USD">USD</option>
+            {/* ...他の通貨オプション */}
+          </select>
+          <button onClick={() => setShowConverted(!showConverted)}>{showConverted ? "Show in Base Currency" : "Convert Currency"}</button>
         </CurrencyControls>
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
