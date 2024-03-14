@@ -10,9 +10,9 @@ const Container = styled.div`
   padding: 20px;
   height: 100vh;
   display: flex;
-  align-items: center; // 水平方向の位置を中央に
-  justify-content: flex-end; // 垂直方向の位置を右端に
-  padding-right: 5%; 
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 5%;
 `;
 
 const Form = styled.form`
@@ -23,38 +23,37 @@ const Form = styled.form`
   width: 100%;
   max-width: 400px;
   margin-left: auto;
-  margin-right: 0%; 
+  margin-right: 0%;
 
-  // スマートフォンサイズのデバイス向けのメディアクエリ
   @media (max-width: 600px) {
-    max-width: 250px; // スマートフォンの画面サイズに合わせてフォームの最大幅を小さくする
-    padding: 20px; // スマートフォンの画面サイズに合わせてパディングを調整する
+    max-width: 250px;
+    padding: 20px;
   }
 `;
 
 const Input = styled.input`
-  width: calc(100% - 20px); // paddingを考慮した幅
+  width: calc(100% - 20px);
   padding: 12px;
   margin: 10px 0;
   border-radius: 5px;
-  border: 1px solid #ccc; // ボーダーカラーをより柔らかい色に
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); // 内側に影を追加
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 `;
 
 const Button = styled.button`
-  background-color: #88a65e; // ボタンの色をより自然な緑色に変更
+  background-color: #88a65e;
   color: white;
   padding: 15px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: bold; // フォントを太く
-  margin-top: 20px; // ボタンの上の余白を追加
-  transition: background-color 0.3s; // 背景色の変化にアニメーションを追加
+  font-weight: bold;
+  margin-top: 20px;
+  transition: background-color 0.3s;
 
   &:hover {
-    background-color: #769f3e; // ホバー時の背景色を変更
+    background-color: #769f3e;
   }
 `;
 

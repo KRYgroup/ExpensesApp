@@ -7,7 +7,7 @@ const Form = styled.form`
   padding: 20px;
   border-radius: 10px;
   border: 1px solid #aaa;
-  width: 70%; // 幅を75%に設定
+  width: 70%;
   margin: 0 auto;
 
   input,
@@ -36,14 +36,13 @@ const Form = styled.form`
     padding: 8px;
     border: 1px solid #888;
     border-radius: 4px;
-    box-sizing: border-box; // Add this line
+    box-sizing: border-box;
   }
 
   select {
-    -webkit-appearance: none; // for Chrome, Safari, and Opera
-    -moz-appearance: none; // for Firefox
+    -webkit-appearance: none;
+    -moz-appearance: none;
     appearance: none;
-    // Reapply any custom styles you need here
   }
 `;
 
@@ -80,7 +79,7 @@ function TransactionForm({ addTransaction, date }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!amount) {
-      setErrorMessage("Please enter an amount."); // amountが空の場合、エラーメッセージを設定
+      setErrorMessage("Please enter an amount.");
       return;
     }
 
@@ -95,7 +94,6 @@ function TransactionForm({ addTransaction, date }) {
 
   return (
     <Form onSubmit={handleSubmit}>
-      {/* エラーメッセージを表示 */}
       {errorMessage && <div style={{ color: "red" }}>{errorMessage}</div>}
       <input type="number" value={amount} onChange={handleAmountChange} placeholder="Amount" />
       <select value={type} onChange={(e) => setType(e.target.value)}>

@@ -4,27 +4,24 @@ import BudgetOverview from "./BudgetOverview";
 import Calendar from "./Calendar";
 import ExpenseChart from "./ExpenseChart";
 import IncomeChart from "./IncomeChart";
-//import CurrencyExchangeRate from "./CurrencyExchangeRate";
 import styled from "styled-components";
 
 const GraphContainer = styled.div`
   display: flex;
-  flex-direction: column; /* スマートフォンでは縦並び */
+  flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  width: 100%; /* コンテナの幅を親要素に合わせる */
-  margin-bottom: 1em; /* グラフ間のマージン */
+  width: 100%;
+  margin-bottom: 1em;
 
   @media screen and (min-width: 768px) {
-    /* タブレットサイズで横並びに変更する */
     flex-direction: row;
-    justify-content: space-around; /* 余白を均等に分布 */
+    justify-content: space-around;
     margin-bottom: 2em;
   }
 
   @media screen and (min-width: 820px) {
-    /* iPad Airの横向きサイズでスタイルを調整する */
-    margin-bottom: 50px; /* より大きなマージン */
+    margin-bottom: 50px;
   }
 `;
 
@@ -79,7 +76,6 @@ const UserDashboard = ({ onBudgetSubmit, budget, baseCurrency, targetCurrency, s
         <ExpenseChart expenses={monthlyExpenses} />
         <IncomeChart incomes={monthlyIncomes} />
       </GraphContainer>
-      {/* <CurrencyExchangeRate /> */}
     </>
   );
 };

@@ -10,9 +10,9 @@ const SignupContainer = styled.div`
   padding: 20px;
   height: 100vh;
   display: flex;
-  align-items: center; // 水平方向の位置を中央に
-  justify-content: flex-end; // 垂直方向の位置を右端に
-  padding-right: 12%; // 右端から25%の位置に設定
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 12%;
 `;
 
 const Form = styled.form`
@@ -22,39 +22,38 @@ const Form = styled.form`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
-  margin-left: auto; // 左側に自動のマージンを設定し、右側に寄せる
-  margin-right: 0; // 右側のマージンを0に設定
+  margin-left: auto;
+  margin-right: 0;
 
-  // スマートフォンサイズのデバイス向けのメディアクエリ
   @media (max-width: 600px) {
-    max-width: 250px; // スマートフォンの画面サイズに合わせてフォームの最大幅を小さくする
-    padding: 20px; // スマートフォンの画面サイズに合わせてパディングを調整する
+    max-width: 250px;
+    padding: 20px;
   }
 `;
 
 const Input = styled.input`
-  width: calc(100% - 20px); // paddingを考慮した幅
+  width: calc(100% - 20px);
   padding: 12px;
   margin: 10px 0;
   border-radius: 5px;
-  border: 1px solid #ccc; // ボーダーカラーをより柔らかい色に
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); // 内側に影を追加
+  border: 1px solid #ccc;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 `;
 
 const Button = styled.button`
-  background-color: #88a65e; // ボタンの色をより自然な緑色に変更
+  background-color: #88a65e;
   color: white;
   padding: 15px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: bold; // フォントを太く
-  margin-top: 20px; // ボタンの上の余白を追加
-  transition: background-color 0.3s; // 背景色の変化にアニメーションを追加
+  font-weight: bold;
+  margin-top: 20px;
+  transition: background-color 0.3s;
 
   &:hover {
-    background-color: #769f3e; // ホバー時の背景色を変更
+    background-color: #769f3e;
   }
 `;
 
@@ -104,44 +103,20 @@ const Signup = () => {
         <Form onSubmit={handleSubmit}>
           <h2>Sign up</h2>
           <div>
-            <Input 
-            type="text" 
-            value={name} 
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Name" 
-              required 
-            />
+            <Input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" required />
           </div>
           <div>
-            <Input 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)} 
-            placeholder="Email" 
-            required 
-            />
+            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required />
           </div>
           <div>
-            <Input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-            placeholder="Password" 
-            required 
-            />
+            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
           </div>
           <div>
-            <Input 
-            type="password" 
-            value={confirmPassword} 
-            onChange={(e) => setConfirmPassword(e.target.value)} 
-            placeholder="Confirm Password" 
-            required 
-            />
+            <Input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" required />
           </div>
           <Button type="submit">Sign up</Button>
           <p>
-            Already have an account? <Link to="/login">Log in here</Link> {/* Link to login page */}
+            Already have an account? <Link to="/login">Log in here</Link>
           </p>
         </Form>
       </div>

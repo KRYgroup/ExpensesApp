@@ -8,11 +8,11 @@ const graphContainerStyle = {
   maxWidth: "600px",
   maxHeight: "500px",
   width: "100%",
-  height: "auto", // スマートフォンでは高さ自動調整
+  height: "auto",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  marginBottom: "50px", // デフォルトのマージン
+  marginBottom: "50px",
 };
 
 const IncomeChart = ({ incomes = [] }) => {
@@ -36,12 +36,11 @@ const IncomeChart = ({ incomes = [] }) => {
     ],
   };
 
-  // データがない場合の処理を追加
   if (incomes.length === 0) {
     return (
       <div style={graphContainerStyle}>
         <h2>Income Chart</h2>
-        <p>No data available</p> {/* ここにメッセージを表示 */}
+        <p>No data available</p>
       </div>
     );
   }

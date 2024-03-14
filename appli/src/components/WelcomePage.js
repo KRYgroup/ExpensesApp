@@ -10,83 +10,80 @@ const WelcomeContainer = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; // コンテンツを上部に寄せる
-  padding-top: 10vh; // 上部のスペースを調整
-  padding-left: 50%; // ラージスクリーンでコンテンツを右に寄せる
+  justify-content: flex-start;
+  padding-top: 10vh;
+  padding-left: 50%;
   padding-bottom: 10%;
 
-  @media (max-width: 1024px) { // タブレットサイズ
-   
-padding-left: 40%; // タブレットサイズでは左のパディングを少なくする
-}
+  @media (max-width: 1024px) {
+    padding-left: 40%;
+  }
 
-@media (max-width: 768px) { // モバイルサイズ
-padding-left: 5%; // モバイルサイズでは左のパディングを減らす
-padding-top: 10vh; // コンテンツを少し下げる
-}
+  @media (max-width: 768px) {
+    padding-left: 5%;
+    padding-top: 10vh;
+  }
 
-@media (max-width: 480px) { // 小さなモバイルデバイス
-padding: 10px; // 小さなデバイスではパディングを均一にする
-padding-top: 15vh; // ヘッダー部分にスペースを追加する
-}
+  @media (max-width: 480px) {
+    padding: 10px;
+    padding-top: 15vh;
+  }
 `;
 
 const WelcomeTitle = styled.h1`
-color: white;
-margin-bottom: 20px;
-text-align: center;
-font-size: 80px;
+  color: white;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 80px;
 
-@media (max-width: 768px) {
-font-size: 55px; // モバイルサイズでフォントサイズを小さくする
-padding-left: 40%;
-}
+  @media (max-width: 768px) {
+    font-size: 55px;
+    padding-left: 40%;
+  }
 
-@media (max-width: 480px) {
-font-size: 30px; // 小さなモバイルデバイスでフォントサイズをさらに小さくする
-padding-left: 40%;
-}
+  @media (max-width: 480px) {
+    font-size: 30px;
+    padding-left: 40%;
+  }
 `;
 
 const StyledParagraph = styled.p`
-color: #EEEEEE; // 明るいグレーで自然な色合い
-font-size: 30px;
-margin-bottom: 10px; // 適切な間隔
-text-align: center; // この行を追加
+  color: #eeeeee;
+  font-size: 30px;
+  margin-bottom: 10px;
+  text-align: center;
 
-@media (max-width: 768px) {
-font-size: 20px; // モバイルサイズでフォントサイズを小さくする
-padding-left: 40%;
-color: #808080; 
-}
+  @media (max-width: 768px) {
+    font-size: 20px;
+    padding-left: 40%;
+    color: #808080;
+  }
 
-@media (max-width: 480px) {
-font-size: 10px; // 小さなモバイルデバイスで
-padding-left: 40%;
-color: #808080; 
-}
+  @media (max-width: 480px) {
+    font-size: 10px;
+    padding-left: 40%;
+    color: #808080;
+  }
 `;
 
 const StyledLink = styled(Link)`
-color: #669933;  // ソフトな青色
-text-decoration: none; // アンダーラインなし
+  color: #669933;
+  text-decoration: none;
 
-&:hover {
-color: #66FF66; // ホバー時の色
-text-decoration: underline; // ホバー時にアンダーラインを表示
-}
+  &:hover {
+    color: #66ff66;
+    text-decoration: underline;
+  }
 
+  @media (max-width: 768px) {
+    font-size: 20px;
+    color: #669933;
+  }
 
-
-@media (max-width: 768px) {
-font-size: 20px; // モバイルサイズでフォントサイズを調整
-color: #669933; 
-}
-
-@media (max-width: 480px) {
-font-size: 10px; // 小さなモバイルデバイスでフォントサイズを調整
-color: #669933; 
-}
+  @media (max-width: 480px) {
+    font-size: 10px;
+    color: #669933;
+  }
 `;
 
 const WelcomePage = () => {

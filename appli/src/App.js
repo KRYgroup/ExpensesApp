@@ -5,7 +5,6 @@ import Footer from "./components/Footer";
 import Signup from "./components/Signup";
 import SignupComplete from "./components/SignupComplete";
 import Login from "./components/Login";
-import Loading from "./components/Loading";
 import WelcomePage from "./components/WelcomePage";
 import UserDashboard from "./components/UserDashboard";
 import ChangePassword from "./components/changePassword";
@@ -18,13 +17,10 @@ const HeaderWrapper = ({ userInfo, onLogout }) => {
 
 function App() {
   const [budget, setBudget] = useState(0);
-  const [isLoading /*setIsLoading*/] = useState(false);
   const handleBudgetSubmit = (newBudget) => {
     setBudget(newBudget);
   };
   const [transactions, setTransactions] = useState([]);
-  //const incomeData = transactions.filter((t) => t.type === "income");
-  //const expenseData = transactions.filter((t) => t.type === "expense");
   const [userInfo, setUserInfo] = useState(null);
 
   const updateUser = (userInfo) => {
@@ -98,7 +94,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {isLoading && <Loading />}
         <HeaderWrapper userInfo={userInfo} onLogout={handleLogout} />
         <div className="content">
           <Routes>
@@ -107,7 +102,6 @@ function App() {
             <Route path="/signup-complete" element={<SignupComplete />} />
             <Route path="/login" element={<Login onUpdateUser={updateUser} onBudgetUpdate={updateBudget} />} />
             <Route path="/change-password" element={<ChangePassword />} />
-            {/* <Route path="/calendar" element={<Calendar transactions={transactions} setTransactions={setTransactions} />} /> */}
             <Route path="/dashboard" element={<UserDashboard onBudgetSubmit={handleBudgetSubmit} budget={budget} transactions={transactions} setTransactions={setTransactions} />} />
           </Routes>
         </div>

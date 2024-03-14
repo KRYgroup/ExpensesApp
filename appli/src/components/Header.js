@@ -6,9 +6,9 @@ import backgroundImage from "../images/pig1.png";
 
 const HeaderContainer = styled.header`
   background-image: url(${backgroundImage});
-  background-size: cover; // 背景画像をカバーとして設定
-  background-repeat: no-repeat; // 背景画像の繰り返しを防ぐ
-  background-position: center; // 背景画像を中央に配置
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   color: white;
   padding: 10px 20px;
   text-align: right;
@@ -19,17 +19,6 @@ const HeaderContainer = styled.header`
 const Nav = styled.nav`
   margin-top: 10px;
 `;
-
-/*const StyledLink = styled(Link)`
-  color: white;
-  margin: 0 10px;
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-*/
 
 const Logout = styled.button`
   background-color: #bbbbbb;

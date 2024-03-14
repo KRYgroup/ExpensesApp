@@ -25,7 +25,6 @@ const FullCalendarStyles = styled.div`
     font-weight: bold;
   }
 
-  /* ホバー状態のスタイル */
   .fc-today-button:hover,
   .fc-prev-button:hover,
   .fc-next-button:hover {
@@ -51,7 +50,7 @@ const ModalContent = styled.div`
   padding: 10px;
   border: 1px solid #888;
   width: 40%;
-  overflow-y: auto; // コンテンツが多い場合にスクロール可能にする
+  overflow-y: auto;
 `;
 
 const CloseButton = styled.span`
@@ -76,38 +75,38 @@ const CurrencyControls = styled.div`
   select,
   button {
     padding: 10px;
-    border: 2px solid #ccc; // Light grey border
-    border-radius: 5px; // Rounded corners
+    border: 2px solid #ccc;
+    border-radius: 5px;
     background-color: white;
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
 
     &:hover {
-      background-color: #f4f4f4; // Light grey background on hover
-      border-color: #888; // Darken border on hover
+      background-color: #f4f4f4;
+      border-color: #888;
     }
 
     &:focus {
       outline: none;
-      border-color: #555; // Darker border for focus
+      border-color: #555;
     }
   }
 
   button {
-    background-color: #4caf50; // Green background for the button
+    background-color: #4caf50;
     color: white;
     border: none;
-    box-shadow: 0 2px #999; // Adds depth by shadow on the bottom
+    box-shadow: 0 2px #999;
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      background-color: #45a049; // Slightly darker green on hover
+      background-color: #45a049;
     }
 
     &:active {
-      box-shadow: 0 2px #666; // Shifts and darkens the shadow to give a pressed effect
-      transform: translateY(2px); // Simulates the button being pressed down
+      box-shadow: 0 2px #666;
+      transform: translateY(2px);
     }
   }
 `;
@@ -116,8 +115,8 @@ const Calendar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [transactions, setTransactions] = useState([]);
-  const [baseCurrency, setBaseCurrency] = useState("AUD"); // 基本通貨
-  const [targetCurrency, setTargetCurrency] = useState("JPY"); // 目標通過
+  const [baseCurrency, setBaseCurrency] = useState("AUD");
+  const [targetCurrency, setTargetCurrency] = useState("JPY");
   const [showConverted, setShowConverted] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
 
@@ -135,11 +134,6 @@ const Calendar = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
-  /*const handleCurrencyChange = (newBaseCurrency, newTargetCurrency) => {
-    setBaseCurrency(newBaseCurrency);
-    setTargetCurrency(newTargetCurrency);
-  };*/
 
   useEffect(() => {
     fetchTransactions();
@@ -250,15 +244,11 @@ const Calendar = () => {
       <div>
         <CurrencyControls>
           <select value={baseCurrency} onChange={(e) => setBaseCurrency(e.target.value)}>
-            {/* 通貨のオプションを追加 */}
             <option value="AUD">AUD</option>
-            {/* ...他の通貨オプション */}
           </select>
           <select value={targetCurrency} onChange={(e) => setTargetCurrency(e.target.value)}>
-            {/* 通貨のオプションを追加 */}
             <option value="JPY">JPY</option>
             <option value="USD">USD</option>
-            {/* ...他の通貨オプション */}
           </select>
           <button onClick={() => setShowConverted(!showConverted)}>{showConverted ? "Show in Base Currency" : "Convert Currency"}</button>
         </CurrencyControls>
@@ -280,7 +270,6 @@ const Calendar = () => {
               <CloseButton onClick={closeModal}>&times;</CloseButton>
               <TransactionForm addTransaction={addTransaction} date={selectedDate} />
               <TransactionSection>
-                {/* ここで formatDate を使用して selectedDate をフォーマットします */}
                 <h3>Transactions for {formatDate(selectedDate)}</h3>
                 <TransactionList transactions={transactions.filter((t) => formatDate(t.date) === formatDate(selectedDate))} onDelete={deleteTransaction} baseCurrency={baseCurrency} targetCurrency={targetCurrency} showConverted={showConverted} />
               </TransactionSection>

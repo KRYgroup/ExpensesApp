@@ -14,23 +14,21 @@ const CompleteContainer = styled.div`
   align-items: flex-start;
   padding-left: 70%;
 
-  // スマートフォンや小さなデバイス向けのメディアクエリ
   @media (max-width: 480px) {
-    padding-right: 50px; 
+    padding-right: 50px;
   }
 `;
-
 
 const Title = styled.h2`
   color: white;
   margin-bottom: 20px;
   text-align: left;
   font-size: 30px;
-  width: 80%; // ここで幅を調整してください
+  width: 80%;
 
   @media (max-width: 480px) {
     font-size: 15px;
-    width: 140%; // スマートフォンでの幅を調整
+    width: 140%;
   }
 `;
 
@@ -39,14 +37,12 @@ const Message = styled.p`
   margin-bottom: 30px;
   text-align: left;
   font-size: 30px;
-  width: 80%; // ここで幅を調整してください
-  
+
   @media (max-width: 480px) {
     font-size: 20px;
-    width: 140%; // スマートフォンでの幅を調整
+    width: 140%;
   }
 `;
-
 
 const StyledLink = styled(Link)`
   padding: 10px 20px;
@@ -57,15 +53,14 @@ const StyledLink = styled(Link)`
   &:hover {
     background-color: #769f3e;
   }
-  
+
   @media (max-width: 480px) {
     padding-right: 20px;
     font-size: 20px;
     max-width: 50px;
-    width: 80%; // スマートフォンでの幅を調整
+    width: 80%;
   }
 `;
-
 
 const SignupComplete = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -75,16 +70,14 @@ const SignupComplete = () => {
       setIsMobile(window.innerWidth < 768);
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   return (
     <CompleteContainer>
       <Title>Thank you for signing up!</Title>
-      <Message>
-        {isMobile ? "You can now log in to get started." : "Your account has been created. You can now log in to get started."}
-      </Message>
+      <Message>{isMobile ? "You can now log in to get started." : "Your account has been created. You can now log in to get started."}</Message>
       <StyledLink to="/login">Login</StyledLink>
     </CompleteContainer>
   );
