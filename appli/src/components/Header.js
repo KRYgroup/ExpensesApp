@@ -1,10 +1,8 @@
 // Header.js
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-//import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "../images/pig1.png";
-import chartImage from "../images/Indian.png";
 
 const HeaderContainer = styled.header`
   background-image: url(${backgroundImage});
@@ -20,22 +18,6 @@ const HeaderContainer = styled.header`
 
 const Nav = styled.nav`
   margin-top: 10px;
-`;
-
-const ChartImage = styled.img`
-  max-width: 100%;
-`;
-
-const StyledButton = styled.button`
-  color: white;
-  margin: 0 10px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 30px;
-  &:hover {
-    text-decoration: underline;
-  }
 `;
 
 /*const StyledLink = styled(Link)`
@@ -63,11 +45,6 @@ const Logout = styled.button`
 
 const Header = ({ userInfo }) => {
   const navigate = useNavigate();
-  const [showChart, setShowChart] = useState(false);
-
-  const handleChartButtonClick = () => {
-    setShowChart(true);
-  };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -78,11 +55,9 @@ const Header = ({ userInfo }) => {
     <HeaderContainer>
       <h1>ExpensesApp</h1>
       <Nav>
-        <StyledButton onClick={handleChartButtonClick}>Charts</StyledButton>
         {userInfo && <p>Welcome, {userInfo.name}!</p>}
         <Logout onClick={handleLogout}>Logout</Logout>
       </Nav>
-      {showChart && <ChartImage src={chartImage} alt="Chart" />}
     </HeaderContainer>
   );
 };
