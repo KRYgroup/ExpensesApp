@@ -37,7 +37,7 @@ const TotalMoney = ({ transactions, selectedMonth }) => {
       (acc, transaction) => {
         const transactionDate = new Date(transaction.date);
         const month = transactionDate.getMonth();
-        if (month === selectedMonth) {
+        if (month === selectedMonth -1) {
           if (transaction.type === "expense") {
             acc.expense += transaction.amount;
           } else if (transaction.type === "income") {
