@@ -56,7 +56,6 @@ function TransactionForm({ addTransaction, date }) {
 
   useEffect(() => {
     const expenseCategories = ["groceries 🍔", "social life 🍺", "transport 🚞", "pets 🐶", "household 🏡", "apparel 👔", "beauty 💄", "health 💊", "education 🎓", "gift 🎁"];
-
     const incomeCategories = ["salary", "invest", "interest", "split bill"];
 
     if (type === "expense") {
