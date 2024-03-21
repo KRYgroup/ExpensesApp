@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { CategoryScale, Chart as ChartJS, BarElement, LinearScale, Title, Tooltip, Legend } from "chart.js";
 
@@ -30,20 +30,39 @@ const graphContainerStyle = {
 };
 
 const ExpenseChart = ({ expenses = [] }) => {
-  const backgroundColors = expenses.map((expense) => categoryColors[expense.category] || categoryColors["other"]);
-
-  const chartData = {
-    labels: expenses.map((expense) => expense.category),
+  // State to hold processed chart data
+  const [chartData, setChartData] = useState({
+    labels: [],
     datasets: [
       {
         label: "Expenses",
-        data: expenses.map((expense) => expense.amount),
-        backgroundColor: backgroundColors,
+        data: [],
+        backgroundColor: [],
         borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,
       },
     ],
-  };
+  });
+
+  // Effect hook to update chart data when expenses prop changes
+  useEffect(() => {
+    const data = expenses.map((expense) => expense.amount);
+    const backgroundColors = expenses.map((expense) => categoryColors[expense.category] || categoryColors["other"]);
+    const labels = expenses.map((expense) => expense.category);
+
+    setChartData({
+      labels: labels,
+      datasets: [
+        {
+          label: "Expenses",
+          data: data,
+          backgroundColor: backgroundColors,
+          borderColor: "rgba(255, 99, 132, 1)",
+          borderWidth: 1,
+        },
+      ],
+    });
+  }, [expenses]); // Depend on expenses to trigger re-calculation
 
   const options = {
     maintainAspectRatio: false,

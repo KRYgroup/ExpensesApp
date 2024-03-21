@@ -29,8 +29,8 @@ const TotalText = styled.p`
 
 const TotalMoney = ({ transactions, selectedMonth }) => {
   const [monthTotals, setMonthTotals] = useState({ expense: 0, income: 0 });
-  console.log("Transactions received in TotalMoney:", transactions);
-  console.log("Selected month in TotalMoney:", selectedMonth);
+  // console.log("Transactions received in TotalMoney:", transactions);
+  // console.log("Selected month in TotalMoney:", selectedMonth);
 
   useEffect(() => {
     const newMonthTotals = transactions.reduce(
@@ -49,7 +49,7 @@ const TotalMoney = ({ transactions, selectedMonth }) => {
       { expense: 0, income: 0 }
     );
 
-    console.log("Month totals calculated:", newMonthTotals);
+    // console.log("Month totals calculated:", newMonthTotals);
     setMonthTotals(newMonthTotals);
   }, [transactions, selectedMonth]);
 

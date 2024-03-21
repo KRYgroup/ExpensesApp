@@ -157,7 +157,14 @@ const Calendar = () => {
       return [];
     }
 
-    const totals = transactions.reduce((acc, transaction) => {
+    // Filter transactions for the current month first
+    const currentMonthTransactions = transactions.filter((transaction) => {
+      const transactionMonth = new Date(transaction.date).getMonth();
+      return transactionMonth === currentMonth;
+    });
+
+    // Then calculate totals from the filtered transactions
+    const totals = currentMonthTransactions.reduce((acc, transaction) => {
       const { date, amount, type } = transaction;
       acc[date] = acc[date] || { expense: 0, income: 0 };
       if (type === "expense") {
