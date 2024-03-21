@@ -13,8 +13,21 @@ const HeaderContainer = styled.header`
   padding: 10px 20px;
   text-align: right;
   margin-bottom: 20px;
+
+  // デフォルトのフォントサイズ
   font-size: 30px;
+
+  // 画面サイズが768px以下の場合にフォントサイズを小さくする
+  @media (max-width: 768px) {
+    font-size: 24px;
+  }
+
+  // 画面サイズが480px以下の場合にさらにフォントサイズを小さくする
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
 `;
+
 
 const Nav = styled.nav`
   margin-top: 10px;
